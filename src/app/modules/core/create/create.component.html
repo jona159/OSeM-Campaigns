@@ -230,3 +230,9 @@
     campaign{{campaign.title}}
 
   </div>
+
+  <div *ngIf="singleCampaign$ | async; let singleCampaign">
+
+    {{singleCampaign.title}}
+
+  </div>

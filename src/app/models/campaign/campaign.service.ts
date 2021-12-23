@@ -30,8 +30,9 @@ export class CampaignService {
     }
 
     getSingleCampaign(id){
-        return this.http.get<Campaign>(`${environment.api_url}/users/campaigns/${id}`).pipe(tap(entity => {
-            console.log(entity)
+        return this.http.get<any>(`${environment.api_url}/users/campaign/${id}`).pipe(tap(entity => {
+            this.campaignStore.upsert(id, entity.data)
+            console.log(entity.data);
         }))
     }
 
