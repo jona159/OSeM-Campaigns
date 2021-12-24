@@ -39,6 +39,6 @@ export class CreateComponent implements OnInit {
 
 // }
 // })
-     this.campaignservice.getSingleCampaign('61b9e714a5c04e6f68f7dfd3').subscribe();
+     //this.campaignservice.getSingleCampaign('61b9e714a5c04e6f68f7dfd3').subscribe();
 }
 }  

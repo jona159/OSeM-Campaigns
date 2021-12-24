@@ -1,4 +1,4 @@
-<section class="section" *ngFor="let campaign of dummyCampaigns">
+<section class="section" *ngFor="let campaign of allCampaigns$ | async">
 <div class="item-container">
   <div class="img-container">
       <img src="https://i.stack.imgur.com/WpMdM.png" alt="Location map">
@@ -9,6 +9,7 @@
           <p class="price">
               Ending {{ campaign.endDate }}
           </p>
+    
       </div>
   </div>
   <div class="separator"></div>
@@ -20,6 +21,43 @@
         <i class="fa fa-lock"></i>
       </div>
       <!--><a href="#" class="more-info">More info</a><-->
+  <button (click)="deleteCampaign(campaign._id)" style="width: 75px">Delete</button>
+  <!--  
+  <button (click)="showUpdateForm(campaign)" style="width: 75px">Update</button>
+  <div *ngIf="isUpdateActivated">
+
+    <h4>Update Campaign</h4>
+
+    <form (ngSubmit)="updateCampaign(updateForm)" #updateForm="ngForm">
+
+         <div class="form-group">
+
+           <label for="title">Campaign Title</label> 
+
+           <input 
+
+             type = "text"
+
+             id="title"
+
+             name="title"
+
+             class ="form-control"
+
+             required
+
+             [(ngModel)]="campaignToBeUpdated.title"
+
+             style = "width:400px"/>
+
+         </div>
+
+         <button [disabled]="updateForm.invalid" type="submit">Update</button>
+
+    </form>
+
+  </div>
+-->
   </div>
   </div>
 </section>
