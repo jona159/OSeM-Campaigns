@@ -146,7 +146,7 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
       this.map.on('draw.update', updateArea);
 
       function updateArea(e) {
-          const data = draw.getAll();
+          const data: any = draw.getAll();
           const answer = document.getElementById('calculated-area');
           if (data.features.length > 0) {
               const area = turf.area(data);

@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 export class CampaignService {
 
     AUTH_API_URL = environment.api_url;
+    
 
     constructor(
         private campaignStore: CampaignStore, 
@@ -47,8 +48,12 @@ export class CampaignService {
     //}
 
     createCampaign(campaign: Campaign): Observable<Campaign> {
-        return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, campaign).pipe(
+
+        let headers = new HttpHeaders();
+        headers = headers.append('Authorization', 'Bearer '+window.localStorage.getItem('sb_accesstoken'));
+        return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, campaign, {headers:headers}).pipe(
             tap( value => {
+                console.log(campaign);
                 this.campaignStore.add([value]);
             })
         )
@@ -57,7 +62,7 @@ export class CampaignService {
     updateCampaign(campaignId: string, campaign: Campaign): Observable<any> {
         return this.http.put(`${environment.api_url}/users/campaign/` + campaignId, campaign).pipe(
             tap( result => {
-                this.campaignStore.update(campaignId, campaign);
+                 this.campaignStore.update(campaignId, campaign);
             })
         )
     }

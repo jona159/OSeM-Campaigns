@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Campaign } from 'src/app/models/campaign/campaign.model';
 import { SubjectSubscriber } from 'rxjs/internal/Subject';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'osem-campaigns',
@@ -32,15 +33,18 @@ export class CampaignsComponent implements OnInit {
   showUpdateForm(campaign: Campaign){
     this.campaignToBeUpdated = {...campaign};
     this.isUpdateActivated = true;
+    console.log(campaign);
+    console.log(this.campaignToBeUpdated);
   }
 
   updateCampaign(updateForm) {
-    this.updateCampaignSub = this.campaignservice.updateCampaign(
-      this.campaignToBeUpdated._id, updateForm.value).subscribe(result => console.log(result)
-    );
-    this.isUpdateActivated = false;
-    this.campaignToBeUpdated = null;
-  }
+      this.updateCampaignSub = this.campaignservice.updateCampaign(
+       this.campaignToBeUpdated._id, updateForm.value).subscribe(result => 
+         console.log(result)
+       );
+     this.isUpdateActivated = false;
+     this.campaignToBeUpdated = null;
+   }
 
   deleteCampaign(campaignId: string){
     this.deleteCampaignSub = this.campaignservice.deleteCampaign(campaignId).subscribe(result => {

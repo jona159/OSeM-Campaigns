@@ -40,6 +40,7 @@ import { NewVisComponent } from './new-vis/new-vis.component';
 import { VisFormComponent } from './vis-form/vis-form.component';
 import { CreateComponent } from './create/create.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
+import { CampaignService } from 'src/app/models/campaign/campaign.service';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
     useClass: TokenInterceptor,
     multi: true
   },
-    PhenomenaService
+    PhenomenaService,
+    [CampaignService]
 
 ],
   exports: [FilterContainerComponent, NavContainerComponent, BottomBarContainerComponent, PhenomenonComponent, ImpressumComponent, FaqComponent, DonateComponent, ThanksComponent, PhenoInfoModalComponent, FilterContainerValuesComponent, DatetimeModalContainerComponent, NewVisContainerComponent],
