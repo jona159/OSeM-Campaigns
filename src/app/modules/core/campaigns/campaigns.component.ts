@@ -7,6 +7,7 @@ import { Campaign } from 'src/app/models/campaign/campaign.model';
 import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { PhenomenaService } from '../services/phenomena.service';
 
 @Component({
   selector: 'osem-campaigns',
@@ -24,11 +25,14 @@ export class CampaignsComponent implements OnInit {
   updateCampaignSub: Subscription; 
 
   deleteCampaignSub: Subscription;
+
+  phenomena
   
-  constructor(private datePipe : DatePipe, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private phenomenaService: PhenomenaService, private datePipe : DatePipe, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.campaignservice.get().subscribe();
+    this.phenomena = this.phenomenaService.getPhenomena();
   }
 
   formatStartdate(event){
