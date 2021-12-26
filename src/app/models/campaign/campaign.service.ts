@@ -55,6 +55,7 @@ export class CampaignService {
             tap( value => {
                 console.log(campaign);
                 this.campaignStore.add([value]);
+                alert('Campaign was created successfully!');
             })
         )
     }
@@ -63,6 +64,7 @@ export class CampaignService {
         return this.http.put(`${environment.api_url}/users/campaign/` + campaignId, campaign).pipe(
             tap( result => {
                  this.campaignStore.update(campaignId, campaign);
+                 alert('Campaign was updated successfully!');
             })
         )
     }
@@ -79,6 +81,7 @@ export class CampaignService {
         return this.http.delete(`${environment.api_url}/users/campaign/${id}`).pipe(
             tap( result => {
                 this.campaignStore.remove(id);
+                alert('Campaign deleted!');
             })
         )
     }
