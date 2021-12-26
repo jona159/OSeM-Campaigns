@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Campaign } from 'src/app/models/campaign/campaign.model';
 import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { tap } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'osem-campaigns',
@@ -24,10 +25,14 @@ export class CampaignsComponent implements OnInit {
 
   deleteCampaignSub: Subscription;
   
-  constructor(private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private datePipe : DatePipe, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.campaignservice.get().subscribe();
+  }
+
+  formatDate(event){
+    this.campaignToBeUpdated.startDate = new Date(event);
   }
 
   showUpdateForm(campaign: Campaign){
@@ -38,6 +43,11 @@ export class CampaignsComponent implements OnInit {
   }
 
   updateCampaign(updateForm) {
+      // let sd= updateForm.value.startDate;
+      // sd = this.datePipe.transform(sd, 'yyyy-MM-dd');
+      // sd = new Date(sd);
+      // console.log(sd);
+      
       this.updateCampaignSub = this.campaignservice.updateCampaign(
        this.campaignToBeUpdated._id, updateForm.value).subscribe(result => 
          console.log(result)

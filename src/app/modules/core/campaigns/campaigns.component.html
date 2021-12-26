@@ -131,8 +131,10 @@
             class ="form-control"
 
             required
+            
+            (ngModelChange)="formatDate($event)"
 
-            [(ngModel)]="campaignToBeUpdated.startDate"
+            [ngModel]="campaignToBeUpdated.startDate"
 
             style = "width:400px"/>
 

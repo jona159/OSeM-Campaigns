@@ -1,6 +1,6 @@
 import { PhenomenaService } from 'src/app/modules/core/services/phenomena.service';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SearchComponent } from './filter/search/search.component';
 import { SearchContainerComponent } from './filter/search-container/search-container.component';
 import { PhenomenonComponent } from './filter/phenomenon/phenomenon.component';
@@ -59,7 +59,8 @@ import { CampaignService } from 'src/app/models/campaign/campaign.service';
     multi: true
   },
     PhenomenaService,
-    [CampaignService]
+    [CampaignService],
+    [DatePipe]
 
 ],
   exports: [FilterContainerComponent, NavContainerComponent, BottomBarContainerComponent, PhenomenonComponent, ImpressumComponent, FaqComponent, DonateComponent, ThanksComponent, PhenoInfoModalComponent, FilterContainerValuesComponent, DatetimeModalContainerComponent, NewVisContainerComponent],
