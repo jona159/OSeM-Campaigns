@@ -31,8 +31,12 @@ export class CampaignsComponent implements OnInit {
     this.campaignservice.get().subscribe();
   }
 
-  formatDate(event){
+  formatStartdate(event){
     this.campaignToBeUpdated.startDate = new Date(event);
+  }
+
+  formatEnddate(event){
+    this.campaignToBeUpdated.endDate = new Date(event);
   }
 
   showUpdateForm(campaign: Campaign){

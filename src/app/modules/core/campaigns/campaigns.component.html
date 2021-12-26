@@ -132,7 +132,7 @@
 
             required
             
-            (ngModelChange)="formatDate($event)"
+            (ngModelChange)="formatStartdate($event)"
 
             [ngModel]="campaignToBeUpdated.startDate"
 
@@ -147,15 +147,17 @@
 
             type = "date"
 
-            id="enddate"
+            id="endDate"
 
-            name="enddate"
+            name="endDate"
 
             class ="form-control"
 
             required
 
-            [(ngModel)]="campaignToBeUpdated.endDate"
+            (ngModelChange)="formatEnddate($event)"
+
+            [ngModel]="campaignToBeUpdated.endDate"
 
             style = "width:400px"/>
 
