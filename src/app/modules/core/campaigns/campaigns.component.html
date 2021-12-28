@@ -1,4 +1,4 @@
-<section class="section" *ngFor="let campaign of allCampaigns$ | async">
+<section class="section" *ngFor="let campaign of allCampaigns$ | async;let i = index;">
 <div class="item-container">
   <div class="img-container">
       <img src="https://i.stack.imgur.com/WpMdM.png" alt="Location map">
@@ -17,12 +17,19 @@
       <p class="title">{{ campaign.title }}</p>
       <p class="sub-title">{{ campaign.owner}}</p>
       <div class="title-separator"></div>
-      <div class="toggle">
-        <i class="fa fa-lock"></i>
-      </div>
+       
+      
       <!--><a href="#" class="more-info">More info</a><-->
   <button (click)="deleteCampaign(campaign._id)" style="width: 75px">Delete</button>
   <button (click)="showUpdateForm(campaign)" style="width: 75px">Update</button>
+
+  <div class="icon" [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i)">
+    <i class="fas fa-arrow-circle-up"></i>
+  </div>
+  <div *ngIf="view_ac === 'ac_'+i" class="item-container">
+    magna ac placerat vestibulum lectus mauris ultrices eros in cursus turpis massa tincidunt dui ut ornare lectus sit amet est placerat in egestas erat imperdiet
+  </div> 
+
   <div *ngIf="isUpdateActivated">
 
     <h4>Update Campaign</h4>
@@ -31,9 +38,7 @@
 
          <div class="form-group">
 
-          <p class="control has-icons-left has-icons-right">
-
-           <label for="title">Campaign Title</label> 
+          <label for="title">Campaign Title</label> 
 
            <input 
 
@@ -50,11 +55,7 @@
              [(ngModel)]="campaignToBeUpdated.title"
 
              style = "width:400px"/>
-             <span class="icon is-small is-left">
-               <i class="fa fa-lock"></i>
-              </span>
-              
-            </p>
+             
           </div>
          <div class="form-group">
 

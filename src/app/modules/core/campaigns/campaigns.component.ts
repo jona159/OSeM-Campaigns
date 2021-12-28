@@ -28,6 +28,13 @@ export class CampaignsComponent implements OnInit {
 
   phenomena
   
+  //Accordion stuff
+  view_ac='ac_0';
+
+  changeAccordion(ac) {
+    this.view_ac = ac;
+  }
+  
   constructor(private phenomenaService: PhenomenaService, private datePipe : DatePipe, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {

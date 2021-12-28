@@ -190,3 +190,29 @@ body {
   align-items: center;
 }
 
+.icon .fa-arrow-circle-up {
+  transition: transform ease-in-out 0.5s;
+}
+
+.icon.active .fa-arrow-circle-up {
+  transform: rotate(-180deg);
+}
+
+.icon .fa-arrow-circle-up:hover {
+  transform: rotate(-180deg);
+}
+
+.ac-head {
+  background: white;
+  padding: 20px;
+  cursor: pointer;
+  margin:0;
+}
+.ac-head.active {
+  color: green;
+}
+.ac-content {
+  padding: 20px;
+  border: 1px solid blue;
+  margin-bottom: 20px;
+}

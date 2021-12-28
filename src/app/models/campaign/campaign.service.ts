@@ -55,7 +55,7 @@ export class CampaignService {
             tap( value => {
                 console.log(campaign);
                 this.campaignStore.add([value]);
-                alert('Campaign was created successfully!');
+                //alert('Campaign was created successfully!');
             })
         )
     }

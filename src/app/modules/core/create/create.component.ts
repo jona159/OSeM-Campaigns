@@ -79,17 +79,18 @@ export class CreateComponent implements OnInit {
 
     console.log(endD);
 
-    //const bson = require('bson');
+    const bson = require('bson');
 
-    //let newID = new bson.ObjectId();
-    //newID = newID.toString();
+    let newID = new bson.ObjectId();
+    newID = newID.toString();
                      
     if(submittedForm.invalid){
       return;
     }
 
     const campaign ={ 
-      _id: uuid.v4(), 
+      //_id: uuid.v4(), 
+      _id: newID,
       title: submittedForm.value.title,
       owner: 'any',
       aboutMe: submittedForm.value.aboutme,
