@@ -20,8 +20,14 @@
        
       
       <!--><a href="#" class="more-info">More info</a><-->
-  <button (click)="deleteCampaign(campaign._id)" style="width: 75px">Delete</button>
-  <button (click)="showUpdateForm(campaign)" style="width: 75px">Update</button>
+
+
+  <!-- Change this to *ngIf="loggedIn$ | async"-->    
+  <ng-container *ngIf="loggedIn$ | async">
+    <button (click)="deleteCampaign(campaign._id)" style="width: 75px">Delete</button>
+    <button (click)="showUpdateForm(campaign)" style="width: 75px">Update</button>
+    <button (click)="joinCampaign(campaign)" style="width: 50px">Join</button>
+  </ng-container>
 
   <div class="icon" [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i)">
     <i class="fas fa-arrow-circle-up"></i>

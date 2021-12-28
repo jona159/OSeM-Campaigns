@@ -98,7 +98,8 @@ export class CreateComponent implements OnInit {
       campaignDetails: submittedForm.value.campaigndetails,
       startDate: startD,
       endDate: endD,
-      phenomena: submittedForm.value.phenomena 
+      phenomena: submittedForm.value.phenomena,
+      participants: [] 
     }
 
     console.log(campaign._id);

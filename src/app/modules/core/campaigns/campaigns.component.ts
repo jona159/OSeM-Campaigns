@@ -8,6 +8,8 @@ import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { PhenomenaService } from '../services/phenomena.service';
+import { SessionService } from 'src/app/models/session/state/session.service';
+import { SessionQuery } from 'src/app/models/session/state/session.query';
 
 @Component({
   selector: 'osem-campaigns',
@@ -16,6 +18,8 @@ import { PhenomenaService } from '../services/phenomena.service';
 })
 export class CampaignsComponent implements OnInit {
 
+  loggedIn$ = this.sessionQuery.isLoggedIn$;
+  
   allCampaigns$ = this.campaignQuery.selectAll();
     
   campaignToBeUpdated: any;
@@ -35,7 +39,7 @@ export class CampaignsComponent implements OnInit {
     this.view_ac = ac;
   }
   
-  constructor(private phenomenaService: PhenomenaService, private datePipe : DatePipe, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private sessionQuery: SessionQuery, private phenomenaService: PhenomenaService, private datePipe : DatePipe, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.campaignservice.get().subscribe();
@@ -57,15 +61,28 @@ export class CampaignsComponent implements OnInit {
     console.log(this.campaignToBeUpdated);
   }
 
+   joinCampaign(campaign: Campaign){
+     this.campaignToBeUpdated={...campaign};
+     this.campaignToBeUpdated.participants =['Javier', 'Nikola', 'Jonas'];
+     console.log(this.campaignToBeUpdated);
+    //  this.updateCampaignSub = this.campaignservice.updateCampaign(
+    //    this.campaignToBeUpdated._id, this.campaignToBeUpdated).subscribe(result => 
+    //     console.log(result)
+    //     );
+      //this.campaignToBeUpdated = null;  
+    }
+
   updateCampaign(updateForm) {
       // let sd= updateForm.value.startDate;
       // sd = this.datePipe.transform(sd, 'yyyy-MM-dd');
       // sd = new Date(sd);
       // console.log(sd);
-      
+      console.log(updateForm);
+      console.log(updateForm.value);
       this.updateCampaignSub = this.campaignservice.updateCampaign(
        this.campaignToBeUpdated._id, updateForm.value).subscribe(result => 
-         console.log(result)
+         //console.log(result)
+         console.log(updateForm.value)
        );
      this.isUpdateActivated = false;
      this.campaignToBeUpdated = null;

@@ -10,6 +10,7 @@ export interface Campaign {
   startDate: Date; 
   endDate: Date;
   phenomena: Array<string>;
+  participants: Array<string>;
 }
 
 
