@@ -47,13 +47,23 @@ export class CampaignService {
     //     }
     //}
 
-    createCampaign(campaign: Campaign): Observable<Campaign> {
+    // createCampaign(campaign: Campaign): Observable<Campaign> {
 
-        let headers = new HttpHeaders();
-        headers = headers.append('Authorization', 'Bearer '+window.localStorage.getItem('sb_accesstoken'));
-        return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, campaign, {headers:headers}).pipe(
+    //     let headers = new HttpHeaders();
+    //     headers = headers.append('Authorization', 'Bearer '+window.localStorage.getItem('sb_accesstoken'));
+    //     return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, campaign, {headers:headers}).pipe(
+    //         tap( value => {
+    //             console.log(campaign);
+    //             this.campaignStore.add([value]);
+    //             //alert('Campaign was created successfully!');
+    //         })
+    //     )
+    // }
+
+    createCampaign(title: string, aboutMe: string, campaignGoals: string, campaignDetails: string, startDate: Date, endDate: Date, phenomena: string): Observable<Campaign> {
+        return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, {title, aboutMe, campaignGoals, campaignDetails, startDate, endDate, phenomena}).pipe(
             tap( value => {
-                console.log(campaign);
+                console.log(value);
                 this.campaignStore.add([value]);
                 //alert('Campaign was created successfully!');
             })

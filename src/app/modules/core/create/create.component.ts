@@ -23,7 +23,7 @@ export class CreateComponent implements OnInit {
 
   createCampaignSub: Subscription;
 
-
+  campaigns =[];
 
   phenomena
 
@@ -40,6 +40,7 @@ export class CreateComponent implements OnInit {
   constructor(private campaignStore: CampaignStore, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private phenomenaService: PhenomenaService, private uiService: UiService, private activatedRoute: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
+     this.campaignQuery.getCampaigns().subscribe(res => this.campaigns = res);
      this.phenomena = this.phenomenaService.getPhenomena();
      this.campaignservice.get().subscribe();
      this.uiService.setFilterVisible(false);
@@ -79,10 +80,10 @@ export class CreateComponent implements OnInit {
 
     console.log(endD);
 
-    const bson = require('bson');
+    //const bson = require('bson');
 
-    let newID = new bson.ObjectId();
-    newID = newID.toString();
+    //let newID = new bson.ObjectId();
+    //newID = newID.toString();
                      
     if(submittedForm.invalid){
       return;
@@ -90,7 +91,7 @@ export class CreateComponent implements OnInit {
 
     const campaign ={ 
       //_id: uuid.v4(), 
-      _id: newID,
+      //_id: newID,
       title: submittedForm.value.title,
       owner: 'any',
       aboutMe: submittedForm.value.aboutme,
@@ -102,10 +103,23 @@ export class CreateComponent implements OnInit {
       participants: [] 
     }
 
-    console.log(campaign._id);
+    console.log(campaign);
+    // if(campaign._id.match(/^[0-9a-fA-F]{24}$/)){
+    //   console.log('matches');
+    // }
 
-    
-    this.campaignservice.createCampaign(campaign).subscribe(result => {
+        
+    this.campaignservice.createCampaign(campaign.title, campaign.aboutMe, campaign.campaignGoals, campaign.campaignDetails, campaign.startDate, campaign.endDate, campaign.phenomena).subscribe(result => {
+      this.campaignStore.update(state => {
+        console.log(state);
+        
+        return {
+          campaigns : 
+          
+            result
+          
+        };
+      });
       this.router.navigateByUrl('/(sidebar:m/campaigns)');
     });
 

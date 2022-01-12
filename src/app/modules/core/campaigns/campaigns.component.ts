@@ -20,6 +20,8 @@ export class CampaignsComponent implements OnInit {
 
   loggedIn$ = this.sessionQuery.isLoggedIn$;
   
+  currentUser: any; 
+  
   allCampaigns$ = this.campaignQuery.selectAll();
     
   campaignToBeUpdated: any;
@@ -54,6 +56,14 @@ export class CampaignsComponent implements OnInit {
     this.campaignToBeUpdated.endDate = new Date(event);
   }
 
+   addParticipant(event){
+     console.log(event);
+     this.sessionQuery.user$.subscribe(result => 
+       this.currentUser = result.name);
+     this.campaignToBeUpdated.participants.push(this.currentUser);
+     console.log(this.campaignToBeUpdated);
+   }
+
   showUpdateForm(campaign: Campaign){
     this.campaignToBeUpdated = {...campaign};
     this.isUpdateActivated = true;
@@ -62,13 +72,18 @@ export class CampaignsComponent implements OnInit {
   }
 
    joinCampaign(campaign: Campaign){
-     this.campaignToBeUpdated={...campaign};
-     this.campaignToBeUpdated.participants =['Javier', 'Nikola', 'Jonas'];
+     this.campaignToBeUpdated = {...campaign};
      console.log(this.campaignToBeUpdated);
-    //  this.updateCampaignSub = this.campaignservice.updateCampaign(
-    //    this.campaignToBeUpdated._id, this.campaignToBeUpdated).subscribe(result => 
-    //     console.log(result)
-    //     );
+     this.sessionQuery.user$.subscribe(result => 
+      this.currentUser = result.name);
+
+     console.log(this.currentUser);
+     this.campaignToBeUpdated.participants =this.currentUser;
+     console.log(this.campaignToBeUpdated);
+    this.updateCampaignSub = this.campaignservice.updateCampaign(
+        this.campaignToBeUpdated._id, this.campaignToBeUpdated).subscribe(result => 
+         console.log(result)
+         );
       //this.campaignToBeUpdated = null;  
     }
 
@@ -77,12 +92,12 @@ export class CampaignsComponent implements OnInit {
       // sd = this.datePipe.transform(sd, 'yyyy-MM-dd');
       // sd = new Date(sd);
       // console.log(sd);
-      console.log(updateForm);
+      //console.log(updateForm);
       console.log(updateForm.value);
       this.updateCampaignSub = this.campaignservice.updateCampaign(
        this.campaignToBeUpdated._id, updateForm.value).subscribe(result => 
-         //console.log(result)
-         console.log(updateForm.value)
+         console.log(result)
+         //console.log(updateForm.value)
        );
      this.isUpdateActivated = false;
      this.campaignToBeUpdated = null;
