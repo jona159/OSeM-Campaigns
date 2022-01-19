@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { PhenomenaService } from '../services/phenomena.service';
 import { SessionService } from 'src/app/models/session/state/session.service';
 import { SessionQuery } from 'src/app/models/session/state/session.query';
+import { UiService } from 'src/app/models/ui/state/ui.service';
 
 @Component({
   selector: 'osem-campaigns',
@@ -19,33 +20,57 @@ import { SessionQuery } from 'src/app/models/session/state/session.query';
 export class CampaignsComponent implements OnInit {
 
   loggedIn$ = this.sessionQuery.isLoggedIn$;
-  
-  currentUser: any; 
-  
+
+  currentUser: any;
+
   allCampaigns$ = this.campaignQuery.selectAll();
-    
+
   campaignToBeUpdated: any;
 
-  isUpdateActivated = false; 
+  isUpdateActivated = false;
 
-  updateCampaignSub: Subscription; 
+  updateCampaignSub: Subscription;
 
   deleteCampaignSub: Subscription;
 
   phenomena
-  
-  //Accordion stuff
-  view_ac='ac_0';
 
+  //Accordion stuff
+  view_ac='';
+  //Function for opening and closing accordion
   changeAccordion(ac) {
-    this.view_ac = ac;
+    if (ac == this.view_ac) {
+      this.view_ac = '';
+    }
+    else {
+      this.view_ac = ac;
+    }
   }
-  
-  constructor(private sessionQuery: SessionQuery, private phenomenaService: PhenomenaService, private datePipe : DatePipe, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private activatedRoute: ActivatedRoute, private router: Router) { }
+
+  //Function for opening "update" functionality only for currently selected campaign
+  view_update = '';
+  changeUpdate(update) {
+    if (update == this.view_update) {
+      this.view_update = '';
+    }
+    else {
+      this.view_update = update;
+    }
+  }
+  constructor(private sessionQuery: SessionQuery,
+              private phenomenaService: PhenomenaService,
+              private datePipe : DatePipe,
+              private campaignQuery: CampaignQuery,
+              private campaignservice: CampaignService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private uiService: UiService) { }
 
   ngOnInit() {
     this.campaignservice.get().subscribe();
     this.phenomena = this.phenomenaService.getPhenomena();
+    //Hide menu on the left side
+    this.uiService.setFilterVisible(false);
   }
 
   formatStartdate(event){
@@ -58,7 +83,7 @@ export class CampaignsComponent implements OnInit {
 
    addParticipant(event){
      console.log(event);
-     this.sessionQuery.user$.subscribe(result => 
+     this.sessionQuery.user$.subscribe(result =>
        this.currentUser = result.name);
      this.campaignToBeUpdated.participants.push(this.currentUser);
      console.log(this.campaignToBeUpdated);
@@ -74,17 +99,17 @@ export class CampaignsComponent implements OnInit {
    joinCampaign(campaign: Campaign){
      this.campaignToBeUpdated = {...campaign};
      console.log(this.campaignToBeUpdated);
-     this.sessionQuery.user$.subscribe(result => 
+     this.sessionQuery.user$.subscribe(result =>
       this.currentUser = result.name);
 
      console.log(this.currentUser);
      this.campaignToBeUpdated.participants =this.currentUser;
      console.log(this.campaignToBeUpdated);
     this.updateCampaignSub = this.campaignservice.updateCampaign(
-        this.campaignToBeUpdated._id, this.campaignToBeUpdated).subscribe(result => 
+        this.campaignToBeUpdated._id, this.campaignToBeUpdated).subscribe(result =>
          console.log(result)
          );
-      //this.campaignToBeUpdated = null;  
+      //this.campaignToBeUpdated = null;
     }
 
   updateCampaign(updateForm) {
@@ -95,7 +120,7 @@ export class CampaignsComponent implements OnInit {
       //console.log(updateForm);
       console.log(updateForm.value);
       this.updateCampaignSub = this.campaignservice.updateCampaign(
-       this.campaignToBeUpdated._id, updateForm.value).subscribe(result => 
+       this.campaignToBeUpdated._id, updateForm.value).subscribe(result =>
          console.log(result)
          //console.log(updateForm.value)
        );
