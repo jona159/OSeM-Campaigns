@@ -11,6 +11,8 @@ import { PhenomenaService } from '../services/phenomena.service';
 import { SessionService } from 'src/app/models/session/state/session.service';
 import { SessionQuery } from 'src/app/models/session/state/session.query';
 import { UiService } from 'src/app/models/ui/state/ui.service';
+import { ThreadService } from 'src/app/models/threads/threads.service';
+import { ThreadStore } from 'src/app/models/threads/threads.store';
 
 @Component({
   selector: 'osem-campaigns',
@@ -22,6 +24,8 @@ export class CampaignsComponent implements OnInit {
   loggedIn$ = this.sessionQuery.isLoggedIn$;
 
   currentUser: any;
+
+  whurl = 'https://discord.com/api/webhooks/932937133918937130/kmiGdfNRbD8MluFz2eLHJwyFmTmtODuPxqImAxC34DyOlJ1Z8OC1vA7rHAypexC-xeTr';
 
   allCampaigns$ = this.campaignQuery.selectAll();
 
@@ -62,6 +66,8 @@ export class CampaignsComponent implements OnInit {
               private datePipe : DatePipe,
               private campaignQuery: CampaignQuery,
               private campaignservice: CampaignService,
+              private threadService: ThreadService,
+              private threadStore: ThreadStore,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private uiService: UiService) { }
@@ -80,6 +86,36 @@ export class CampaignsComponent implements OnInit {
   formatEnddate(event){
     this.campaignToBeUpdated.endDate = new Date(event);
   }
+
+  
+
+  createThread(campaign: Campaign){
+    this.campaignToBeUpdated = {...campaign};
+    console.log(this.campaignToBeUpdated._id);
+    console.log(this.campaignToBeUpdated.title);
+    let date = new Date();
+    console.log(date);
+    let title = this.campaignToBeUpdated.title + ' thread';
+    console.log(title);
+    const msg = {content: title};
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", this.whurl, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(msg));
+    
+    this.threadService.createThread(title, date, this.campaignToBeUpdated._id).subscribe(result => {
+      this.threadStore.update(state => {
+        console.log(state);
+        
+        return {
+          threads : 
+          
+            result
+          
+        };
+      });
+
+  })}
 
    addParticipant(event){
      console.log(event);

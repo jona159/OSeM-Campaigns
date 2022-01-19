@@ -7,6 +7,7 @@ import { Thread } from './threads.model';
 import { schema } from 'normalizr';
 import { take, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Campaign } from '../campaign/campaign.model';
 
 @Injectable({ providedIn: 'root'})
 export class ThreadService {
@@ -17,6 +18,16 @@ export class ThreadService {
     constructor(
         private threadStore: ThreadStore, 
         private http: HttpClient) {
+    }
+
+    createThread(title: string, date: Date, campaign: string): any {
+        return this.http.post<any>(`${environment.api_url}/users/thread`, {title, date, campaign}).pipe(
+            tap( value => {
+                console.log(value);
+                this.threadStore.add([value]);
+                //alert('Campaign was created successfully!');
+            })
+        )
     }
 
     get () {
