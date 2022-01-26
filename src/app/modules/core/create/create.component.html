@@ -21,6 +21,49 @@
       Title is required!
   </div>
 
+  <div class="field">
+    <p class="control is-expanded has-icons-left has-icons-right">
+      <input type="text"
+        class="input"
+        id="polygonDraw"
+      placeholder="polygonDraw are f..."
+      readonly
+      [(ngModel)]="model.polygonDraw"
+      name="polygonDraw"
+      #polygonDraw="ngModel">
+        <span class="icon is-small is-left">
+              <i class="fa fa-lock"></i>
+        </span>
+    </p>
+  </div>
+  <div
+    [hidden]="polygonDraw.valid || polygonDraw.pristine"
+    class="notification is-danger is-light">
+    polygonDraw details are required!
+  </div>
+
+  <div class="field">
+    <p class="control is-expanded has-icons-left has-icons-right">
+      <input type="text"
+        class="input"
+        id="pointDraw"
+      placeholder="pointDraw are f..."
+      readonly
+      [(ngModel)]="model.pointDraw"
+      name="pointDraw"
+      #pointDraw="ngModel">
+        <span class="icon is-small is-left">
+              <i class="fa fa-lock"></i>
+        </span>
+    </p>
+  </div>
+  <div
+    [hidden]="pointDraw.valid || pointDraw.pristine"
+    class="notification is-danger is-light">
+    pointDraw details are required!
+  </div>
+
+ 
   <div class="form-group">
     <p class="control has-icons-left">
          <input type="text"
@@ -204,6 +247,14 @@
     <div class="box">
       <div class="col-xs-3">Title of campaign</div>
       <div class="col-xs-9">{{ model.title }}</div>
+    </div>
+    <div class="box">
+      <div class="col-xs-3">Polygon</div>
+      <div class="col-xs-9">{{ model.polygonDraw }}</div>
+    </div>
+    <div class="box">
+      <div class="col-xs-3">Point</div>
+      <div class="col-xs-9">{{ model.pointDraw }}</div>
     </div>
     <div class="box">
       <div class="col-xs-3">About me</div>

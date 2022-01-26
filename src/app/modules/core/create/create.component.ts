@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormDesign } from 'src/app/form';
 import { UiService } from 'src/app/models/ui/state/ui.service';
 import { PhenomenaService } from '../services/phenomena.service';
@@ -9,6 +9,8 @@ import { Campaign } from 'src/app/models/campaign/campaign.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as uuid from 'uuid';
+import { MapService } from 'src/app/modules/explore/services/map.service';
+import { UiQuery } from 'src/app/models/ui/state/ui.query';
 
 
 
@@ -19,7 +21,7 @@ import * as uuid from 'uuid';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnDestroy {
 
   createCampaignSub: Subscription;
 
@@ -29,6 +31,9 @@ export class CreateComponent implements OnInit {
 
   model = new FormDesign();
 
+  selectedPolygon$ = this.uiQuery.selectedPolygon$;
+  selectedPoint$ = this.uiQuery.selectedPoint$;
+
   submitted = false;
   allCampaigns$ = this.campaignQuery.selectAll();
   singleCampaign$ = this.campaignQuery.selectLast();
@@ -37,17 +42,26 @@ export class CreateComponent implements OnInit {
  //             this.submitted = true;
  //           }
 
-  constructor(private campaignStore: CampaignStore, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private phenomenaService: PhenomenaService, private uiService: UiService, private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(private campaignStore: CampaignStore, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private phenomenaService: PhenomenaService, private uiService: UiService, private activatedRoute: ActivatedRoute, private router: Router, private mapService: MapService, private uiQuery: UiQuery) {}
 
   ngOnInit(): void {
      this.campaignQuery.getCampaigns().subscribe(res => this.campaigns = res);
      this.phenomena = this.phenomenaService.getPhenomena();
      this.campaignservice.get().subscribe();
      this.uiService.setFilterVisible(false);
-
+     this.mapService.DrawControlMap();
+     //this.mapService.flyToCampaign();
+     this.selectedPolygon$.subscribe(polygon => {this.model.polygonDraw = polygon});
+     this.selectedPoint$.subscribe(point => {this.model.pointDraw = point});
+     let that = this;
+     setTimeout(function(){ that.uiService.setdrawmode(true)},100)
      
 
 }
+ngOnDestroy(){
+  console.log("Destroy");
+  this.uiService.setdrawmode(false);
+}  
 
   onSubmit(submittedForm){
     

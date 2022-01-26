@@ -36,7 +36,10 @@ export interface UiState {
   showDateModal: boolean,
   stats: object,
   activeTab: string,
-  chartLoading: boolean
+  chartLoading: boolean,
+  selectedPolygon: any,
+  selectedPoint: any,
+  drawmode: boolean
 }
 
 export function createInitialState(): UiState {
@@ -123,7 +126,11 @@ export function createInitialState(): UiState {
       totalMeasurements: null
     },
     activeTab: 'phenos',
-    chartLoading: false,
+    chartLoading: false, 
+    
+    selectedPolygon: [],
+    selectedPoint: [],
+    drawmode: false,
 
   };
 }

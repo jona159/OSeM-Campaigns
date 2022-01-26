@@ -25,7 +25,7 @@ export class CampaignsComponent implements OnInit {
 
   currentUser: any;
 
-  slackToken ='xoxp-2966864970930-2969169630004-3018855420929-4b4009dbb1b6085ce777f3f0bbb90f02'
+  slackToken ='xoxp-2966864970930-2969169630004-3008901576819-0b8e12f0c75789fc94ae67cba7707c2f'
 
   whurl = 'https://discord.com/api/webhooks/932937133918937130/kmiGdfNRbD8MluFz2eLHJwyFmTmtODuPxqImAxC34DyOlJ1Z8OC1vA7rHAypexC-xeTr';
 
@@ -92,12 +92,13 @@ export class CampaignsComponent implements OnInit {
   }
 
   postThread(){
-    this.threadService.createSlack().subscribe();
-    //var xmlhttp = new XMLHttpRequest();
-    //xmlhttp.open('POST', `https://slack.com/api/conversations.create?name=jstest&is_private=false&pretty=1`);
+    //this.threadService.createSlack().subscribe();
+    var xmlhttp = new XMLHttpRequest();
+    
+    xmlhttp.open('POST', `https://slack.com/api/conversations.create?name=jstest&is_private=false&pretty=1`);
     //xmlhttp.setRequestHeader('Content-type', 'application/json');
     //xmlhttp.setRequestHeader('Authorization', 'Bearer ' + this.slackToken);
-    //xmlhttp.send(null);
+    xmlhttp.send("token=xoxp-2966864970930-2969169630004-3008901576819-0b8e12f0c75789fc94ae67cba7707c2f");
 
   }
 

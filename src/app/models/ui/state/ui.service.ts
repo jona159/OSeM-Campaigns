@@ -210,4 +210,15 @@ export class UiService {
   setChartLoading(loading){
     this.uiStore.update( state => ({ ...state, chartLoading: loading}))
   }
+  setSelectedPolygon(selectedPolygon){
+    this.uiStore.update( state => ({ ...state , selectedPolygon: selectedPolygon }));
+  }
+  setSelectedPoint(selectedPoint){
+    this.uiStore.update( state => ({ ...state , selectedPoint: selectedPoint }));
+  }
+
+  setdrawmode(drawmode){
+    this.uiStore.update( state => ({ ...state , drawmode: drawmode }));
+  }
+
 }

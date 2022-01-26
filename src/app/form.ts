@@ -9,6 +9,8 @@ export class FormDesign {
     public campaignDetails?: string,
     public startDate?: Date,
     public endDate?: Date,
+    public polygonDraw?: string,
+    public pointDraw?: string,
     public phenomena?: string
   ) {  }
 
