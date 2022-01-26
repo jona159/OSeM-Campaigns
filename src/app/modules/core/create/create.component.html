@@ -1,6 +1,6 @@
 <div [hidden]="submitted">
 <form (ngSubmit)="onSubmit(createForm)" #createForm = "ngForm">
-  <div class="form-group">
+  <div class="field">
         <p class="control has-icons-left has-icons-right">
           <input type="text"
           class="input"
@@ -64,7 +64,7 @@
   </div>
 
  
-  <div class="form-group">
+  <div class="field">
     <p class="control has-icons-left">
          <input type="text"
          class="input"
@@ -217,20 +217,19 @@
       </select>
     </div>   -->
 
-    <div class="field">
-      <p class="control has-icons-left">
-          <input type="string"
-          class="input"
-          id="phenomena"
-          required
-          placeholder="Precipitation"
-          [(ngModel)]="model.phenomena"
-          name="phenomena">
-          <span class="icon is-small is-left">
-              <i class="fa fa-lock"></i>
-          </span>
-      </p>
-  </div> 
+    <div class="select is-multiple">
+      <label for="power">Phenomena</label>
+      <select multiple
+              size="10"
+              id="phenomena"
+              required
+              [(ngModel)]="model.phenomena"
+              name="phenomena">
+        <option *ngFor="let one of phenomena | async"
+                [value]="one.phenomenonLabel[0].value">{{one.phenomenonLabel[0].value}}
+              </option>
+      </select>
+    </div>
     <div>
       <button
             type="submit"

@@ -18,11 +18,12 @@
       <div class="title-separator"></div>
       <div>
         <button class="modify_button" (click)="deleteCampaign(campaign._id)">Delete</button>
-        <button class="modify_button" (click)="showUpdateForm(campaign);changeUpdate('cu_'+i)">Update</button>
+        <button class="modify_button" [ngClass]="{'active': view_update === 'ac_'+i}"
+        (click)="showUpdateForm(campaign);changeUpdate('ac_'+i)">Update</button>
         <button class="modify_button" (click)="joinCampaign(campaign)">Join</button>
-        <button class="modify_button" (click)="createThread(campaign)">Discuss</button>
+        
       </div>
-      <div class="icon"  [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i)">
+      <div class="icon"  [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i);showUpdateForm(campaign)">
         <i class="fas fa-arrow-circle-up"></i>
       </div>
   </div>
@@ -30,82 +31,90 @@
   <div class="content-container" [ngClass]="{'active': view_ac === 'ac_'+i}" *ngIf="view_ac === 'ac_'+i" >
     <form (ngSubmit)="updateCampaign(updateForm)" #updateForm="ngForm">
        <div>
-        <label for="title">Campaign Title</label>
+        <label for="title">Campaign Title</label><br>
         <input
           type = "text"
           id="title"
           name="title"
-          class ="form-control"
+          class ="input is-small"
           required
-          [disabled] = "view_update !== 'cu_'+i"
-          [(ngModel)]="campaign.title"
+          [disabled] = "view_update !== 'ac_'+i"
+          [(ngModel)]="campaignToBeUpdated.title"
           style = "width:400px"/>
        </div>
        <div>
-        <label for="aboutMe">Campaign AboutMe</label>
+        <label for="aboutMe">Campaign AboutMe</label><br>
         <input
           type = "text"
           id="aboutMe"
           name="aboutMe"
-          class ="form-control"
+          class ="input is-small"
           required
+          [disabled] = "view_update !== 'ac_'+i"
           [(ngModel)]="campaignToBeUpdated.aboutMe"
           style = "width:400px"/>
       </div>
       <div class="form-group">
-        <label for="campaignGoals">Campaign Goals</label>
+        <label for="campaignGoals">Campaign Goals</label><br>
         <input
           type = "text"
           id="campaignGoals"
           name="campaignGoals"
-          class ="form-control"
+          class ="input is-small"
           required
+          [disabled] = "view_update !== 'ac_'+i"
           [(ngModel)]="campaignToBeUpdated.campaignGoals"
           style = "width:400px"/>
       </div>
       <div class="form-group">
-        <label for="details">Campaign Details</label>
+        <label for="details">Campaign Details</label><br>
         <input
           type = "text"
           id="campaignDetails"
           name="campaignDetails"
-          class ="form-control"
+          class ="input is-small"
           required
+          [disabled] = "view_update !== 'ac_'+i"
           [(ngModel)]="campaignToBeUpdated.campaignDetails"
           style = "width:400px"/>
       </div>
       <div class="form-group">
-        <label for="startDate">Campaign StartDate</label>
+        <label for="startDate">Campaign StartDate {{campaignToBeUpdated.startDate}}</label><br>
         <input
           type = "date"
           id="startDate"
           name="startDate"
-          class ="form-control"
+          class ="input is-small"
           required
+          [disabled] = "view_update !== 'ac_'+i"
           (ngModelChange)="formatStartdate($event)"
           [ngModel]="campaignToBeUpdated.startDate"
           style = "width:400px"/>
       </div>
       <div class="form-group">
-        <label for="endDate">Campaign Enddate</label>
+        <label for="endDate">Campaign Enddate {{campaignToBeUpdated.endDate}}</label><br>
         <input
           type = "date"
           id="endDate"
           name="endDate"
-          class ="form-control"
+          min="{{campaignToBeUpdated.startDate}}"
+          class ="input is-small"
           required
+          [disabled] = "view_update !== 'ac_'+i"
           (ngModelChange)="formatEnddate($event)"
           [ngModel]="campaignToBeUpdated.endDate"
           style = "width:400px"/>
       </div>
       <div class="select is-multiple">
-        <label for="phenomena">Campaign Phenomena</label>
+        <label for="phenomena">Campaign Phenomena</label><br>
         <select
           multiple
           size="10"
           id="phenomena"
           name="phenomena"
+          class="input is-small"
           required
+          [disabled] = "view_update !== 'ac_'+i"
           [(ngModel)]="campaignToBeUpdated.phenomena">
         <option *ngFor="let one of phenomena | async"
                 [value]="one.phenomenonLabel[0].value">{{one.phenomenonLabel[0].value}}
@@ -113,17 +122,8 @@
       </select>
       </div>
       <br>
-       <button class="modify_button" [disabled]="updateForm.invalid || view_update !== 'cu_'+i " type="submit">Save</button>
+       <button class="modify_button" [disabled]="updateForm.invalid || view_update !== 'ac_'+i " type="submit"
+       >Save</button>
   </form>
   </div>
-  <div *ngIf="threadFormActivated">
-    <label for="threadForm">What is this Thread about? </label>
-    <input
-    type="text"
-    id="threadForm"
-    name="threadForm"
-    >
-    <button (click)="postThread()">Save</button>
-  </div>
-
 </section>

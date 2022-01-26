@@ -47,6 +47,8 @@ export class CampaignsComponent implements OnInit {
   view_ac='';
   //Function for opening and closing accordion
   changeAccordion(ac) {
+    if (this.view_update !== '')
+      this.view_update = '';
     if (ac == this.view_ac) {
       this.view_ac = '';
     }
@@ -58,11 +60,12 @@ export class CampaignsComponent implements OnInit {
   //Function for opening "update" functionality only for currently selected campaign
   view_update = '';
   changeUpdate(update) {
-    if (update == this.view_update) {
+   if (update == this.view_update) {
       this.view_update = '';
     }
     else {
-      this.view_update = update;
+      this.view_update = update
+      this.view_ac = update;
     }
   }
   constructor(private sessionQuery: SessionQuery,
@@ -182,7 +185,9 @@ export class CampaignsComponent implements OnInit {
          //console.log(updateForm.value)
        );
      this.isUpdateActivated = false;
-     this.campaignToBeUpdated = null;
+      //reset the "Update" button again to non-updating state
+      this.view_update = '';
+     //this.campaignToBeUpdated = null;
    }
 
   deleteCampaign(campaignId: string){

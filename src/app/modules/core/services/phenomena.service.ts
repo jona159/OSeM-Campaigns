@@ -12,7 +12,7 @@ export class PhenomenaService {
    * Get all phenomena
    */
   getPhenomena () {
-    return this.http.get('https://api.sensor-wiki.opensensemap.org/phenomena/all?type=json');
+    return this.http.get('https://api.sensors.wiki/phenomena/all');
     }
   }
 
