@@ -20,7 +20,7 @@
         <button class="modify_button" (click)="deleteCampaign(campaign._id)">Delete</button>
         <button class="modify_button" (click)="showUpdateForm(campaign);changeUpdate('cu_'+i)">Update</button>
         <button class="modify_button" (click)="joinCampaign(campaign)">Join</button>
-        <button class="modify_button" (click)="createThread(campaign)">Create Thread</button>
+        <button class="modify_button" (click)="createThread(campaign)">Discuss</button>
       </div>
       <div class="icon"  [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i)">
         <i class="fas fa-arrow-circle-up"></i>
@@ -115,6 +115,15 @@
       <br>
        <button class="modify_button" [disabled]="updateForm.invalid || view_update !== 'cu_'+i " type="submit">Save</button>
   </form>
+  </div>
+  <div *ngIf="threadFormActivated">
+    <label for="threadForm">What is this Thread about? </label>
+    <input
+    type="text"
+    id="threadForm"
+    name="threadForm"
+    >
+    <button (click)="postThread()">Save</button>
   </div>
 
 </section>

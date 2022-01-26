@@ -30,6 +30,18 @@ export class ThreadService {
         )
     }
 
+    createSlack(){
+
+            let headers = new HttpHeaders();
+             headers = headers.append('Authorization', 'Bearer '+ 'xoxp-2966864970930-2969169630004-3018855420929-4b4009dbb1b6085ce777f3f0bbb90f02');
+             return this.http.post(`https://slack.com/api/conversations.create?name=jstest&is_private=false&pretty=1`, {headers:headers}).pipe(
+                 tap( value => {
+                     console.log(value);
+                     //alert('Campaign was created successfully!');
+                 })
+             )
+         }
+
     get () {
 
         const thread = new schema.Entity('threads', {}, { idAttribute: '_id'});
