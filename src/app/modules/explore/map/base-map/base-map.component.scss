@@ -74,3 +74,18 @@ li {
   color: #fff;
   background: #ee8a65;
   }
+
+  #fill-button {
+    min-height: 20px;
+    background-color: #ff69b4 ;
+    color: #fff;
+    font-family: 'Arial';
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    margin: 10px 0;
+    position: absolute;
+    top: 210px;
+    left: 10px;
+}

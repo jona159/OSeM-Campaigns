@@ -232,6 +232,14 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
       }
     }
 
+    // add popup to drawn polygon
+  this.map.on('click', 'this.draw', function (e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML('<b>Hi popup!</b>')
+      .addTo(this.map);
+  });
+
   }
 
   enableFunction(){
