@@ -1,3 +1,4 @@
+import { MapService } from 'src/app/modules/explore/services/map.service';
 import { Component, OnInit } from '@angular/core';
 import { CampaignQuery } from 'src/app/models/campaign/campaign.query';
 import { CampaignService } from 'src/app/models/campaign/campaign.service';
@@ -77,7 +78,8 @@ export class CampaignsComponent implements OnInit {
               private threadStore: ThreadStore,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private uiService: UiService) { }
+              private uiService: UiService,
+              private mapService: MapService) { }
 
   ngOnInit() {
     this.campaignservice.get().subscribe();
@@ -85,6 +87,12 @@ export class CampaignsComponent implements OnInit {
     //Hide menu on the left side
     this.uiService.setFilterVisible(false);
   }
+
+  //zoom to currently selected campaign
+  clickToZoom(coords: number[]) {
+    this.mapService.zoomMe(coords);
+  }
+
 
   formatStartdate(event){
     this.campaignToBeUpdated.startDate = new Date(event);
@@ -97,7 +105,7 @@ export class CampaignsComponent implements OnInit {
   postThread(){
     //this.threadService.createSlack().subscribe();
     var xmlhttp = new XMLHttpRequest();
-    
+
     xmlhttp.open('POST', `https://slack.com/api/conversations.create?name=jstest&is_private=false&pretty=1`);
     //xmlhttp.setRequestHeader('Content-type', 'application/json');
     //xmlhttp.setRequestHeader('Authorization', 'Bearer ' + this.slackToken);
@@ -105,7 +113,7 @@ export class CampaignsComponent implements OnInit {
 
   }
 
-  
+
 
   createThread(campaign: Campaign){
     this.campaignToBeUpdated = {...campaign};
@@ -121,16 +129,16 @@ export class CampaignsComponent implements OnInit {
     xhr.open("POST", this.whurl, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(msg));
-    
+
     // this.threadService.createThread(title, date, this.campaignToBeUpdated._id).subscribe(result => {
     //   this.threadStore.update(state => {
     //     console.log(state);
-        
+
     //     return {
-    //       threads : 
-          
+    //       threads :
+
     //         result
-          
+
     //     };
     //   });
 
@@ -159,7 +167,7 @@ export class CampaignsComponent implements OnInit {
      this.sessionQuery.user$.subscribe(result =>
       this.currentUser = result.name);
 
-    //alert('Follow this link to join the discussion on Slack: https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');  
+    //alert('Follow this link to join the discussion on Slack: https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
 
      console.log(this.currentUser);
      this.campaignToBeUpdated.participants =this.currentUser;
