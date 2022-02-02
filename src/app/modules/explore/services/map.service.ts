@@ -89,6 +89,17 @@ export class MapService {
     this.worldData = new BehaviorSubject(false);
   }
 
+
+  // function for zooming into specific campaign
+  zoomMe(coordinates: number[]) {
+    this.map.flyTo({
+      center: coordinates,
+      zoom: 15,
+      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+      });
+  }
+
+
   // initialize the map, TODO: Dynamic start point
   generateMap(elementName) {
 
@@ -133,15 +144,6 @@ export class MapService {
       document.getElementById('infoCoord').innerHTML =
       JSON.stringify(e.lngLat.wrap(), function(key, val) {
         return val.toFixed ? Number(val.toFixed(3)) : val;
-      });
-    });
-
-    document.getElementById('fly').addEventListener('click', () => {
-      // Fly to a random location by offsetting the point
-      this.map.flyTo({
-      center: [7.61, 51.964],
-      zoom: 15,
-      essential: true // this animation is considered essential with respect to prefers-reduced-motion
       });
     });
   }
