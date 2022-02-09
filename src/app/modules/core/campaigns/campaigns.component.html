@@ -43,6 +43,18 @@
           style = "width:400px"/>
        </div>
        <div>
+        <label for="polygonDraw">Campaign Polygon</label><br>
+        <input
+          type = "text"
+          id="polygonDraw"
+          name="polygonDraw"
+          class ="input is-small"
+          required
+          [disabled] = "view_update !== 'ac_'+i"
+          [(ngModel)]="campaignToBeUpdated.polygonDraw"
+          style = "width:400px"/>
+       </div>
+       <div>
         <label for="aboutMe">Campaign AboutMe</label><br>
         <input
           type = "text"

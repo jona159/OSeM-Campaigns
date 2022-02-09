@@ -107,6 +107,7 @@ ngOnDestroy(){
       //_id: uuid.v4(), 
       //_id: newID,
       title: submittedForm.value.title,
+      polygonDraw: submittedForm.value.polygonDraw,
       owner: 'any',
       aboutMe: submittedForm.value.aboutme,
       campaignGoals: submittedForm.value.campaigngoals,
@@ -123,7 +124,7 @@ ngOnDestroy(){
     // }
 
         
-    this.campaignservice.createCampaign(campaign.title, campaign.aboutMe, campaign.campaignGoals, campaign.campaignDetails, campaign.startDate, campaign.endDate, campaign.phenomena).subscribe(result => {
+    this.campaignservice.createCampaign(campaign.title, campaign.polygonDraw, campaign.aboutMe, campaign.campaignGoals, campaign.campaignDetails, campaign.startDate, campaign.endDate, campaign.phenomena).subscribe(result => {
       this.campaignStore.update(state => {
         console.log(state);
         
