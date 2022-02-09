@@ -217,7 +217,7 @@
       </select>
     </div>   -->
 
-    <div class="select is-multiple">
+    <!-- <div class="select is-multiple">
       <label for="power">Phenomena</label>
       <select multiple
               size="10"
@@ -229,7 +229,17 @@
                 [value]="one.phenomenonLabel[0].value">{{one.phenomenonLabel[0].value}}
               </option>
       </select>
-    </div>
+    </div> -->
+    <div class="field">
+            <label for="power">Phenomena</label>
+            <input
+                    id="power"
+                    type="text"
+                    value="PM10"
+                    required
+                    [(ngModel)]="model.phenomena"
+                    name="phenomena">
+    </div>                
     <div>
       <button
             type="submit"
