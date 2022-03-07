@@ -19,11 +19,13 @@
       <div>
         <button class="modify_button" (click)="deleteCampaign(campaign._id)">Delete</button>
         <button class="modify_button" [ngClass]="{'active': view_update === 'ac_'+i}"
-        (click)="showUpdateForm(campaign);changeUpdate('ac_'+i);clickToZoom([13,52])">Update</button>
+        (click)="showUpdateForm(campaign);changeUpdate('ac_'+i);clickToZoom(campaign.polygonDraw)">Update</button>
         <button class="modify_button" (click)="joinCampaign(campaign)">Join</button>
 
+
+
       </div>
-      <div class="icon"  [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i);showUpdateForm(campaign);clickToZoom([13,52])">
+      <div class="icon"  [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i);showUpdateForm(campaign);clickToZoom(campaign.polygonDraw)">
         <i class="fas fa-arrow-circle-up"></i>
       </div>
   </div>

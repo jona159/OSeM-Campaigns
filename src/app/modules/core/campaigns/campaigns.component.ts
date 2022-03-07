@@ -89,10 +89,9 @@ export class CampaignsComponent implements OnInit {
   }
 
   //zoom to currently selected campaign
-  clickToZoom(coords: number[]) {
-    this.mapService.zoomMe(coords);
+  clickToZoom(coordinates: any) {
+    this.mapService.zoomMe(coordinates);
   }
-
 
   formatStartdate(event){
     this.campaignToBeUpdated.startDate = new Date(event);
