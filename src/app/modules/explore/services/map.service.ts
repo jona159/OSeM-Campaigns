@@ -36,9 +36,13 @@ export class MapService {
   UserLocation;
   DrawnPolygon;
   DrawnPoint;
+  DrawnCentroid;
   Drawnpolygons_null;
   Drawnpoints_null;
   worldLocalJSONData: any = worldLocalJSONFile;
+  CampaignPol;
+  bbox_campaign;
+  Campaign_coord;
 
   worldData:BehaviorSubject<any>; // all the live Data as geojson, gets pulled on page load
   selectedPheno$ = this.uiQuery.selectSelectedPheno$;
@@ -91,14 +95,18 @@ export class MapService {
 
 
   // function for zooming into specific campaign
-  zoomMe(coordinates: number[]) {
-    this.map.flyTo({
-      center: coordinates,
-      zoom: 15,
-      essential: true // this animation is considered essential with respect to prefers-reduced-motion
-      });
-  }
+  zoomMe(coordinates: any) {
 
+    this.Campaign_coord = coordinates
+    this.CampaignPol = turf.polygon(JSON.parse(coordinates));
+    this.bbox_campaign = turf.bbox(this.CampaignPol);
+    console.log("Campaign_coord1",this.CampaignPol);
+    this.map.fitBounds([
+      [this.bbox_campaign[0],this.bbox_campaign[1]],
+      [this.bbox_campaign[2],this.bbox_campaign[3]]
+    ]);
+
+    }
 
   // initialize the map, TODO: Dynamic start point
   generateMap(elementName) {
@@ -146,6 +154,50 @@ export class MapService {
         return val.toFixed ? Number(val.toFixed(3)) : val;
       });
     });
+
+
+
+//PLOTTING polygons
+this.map.on('load', () => {
+      console.log("CampaignAREA","Sirve")
+      // Add a data source containing GeoJSON data.
+      this.map.addSource('CampPoly', {
+      'type': 'geojson',
+      'data': {
+      'type': 'Feature',
+      'geometry': {
+      'type': 'Polygon',
+      // These coordinates outline CampPoly.
+      'coordinates': this.Campaign_coord
+      }
+      }
+      });
+
+      // Add a new layer to visualize the polygon.
+      this.map.addLayer({
+      'id': 'CampPoly',
+      'type': 'fill',
+      'source': 'CampPoly', // reference the data source
+      'layout': {},
+      'paint': {
+      'fill-color': '#0080ff', // blue color fill
+      'fill-opacity': 0.5
+      }
+      });
+      // Add a black outline around the polygon.
+      this.map.addLayer({
+      'id': 'outline',
+      'type': 'line',
+      'source': 'CampPoly',
+      'layout': {},
+      'paint': {
+      'line-color': '#000',
+      'line-width': 3
+      }
+      });
+      });
+
+
   }
 
   DrawControlMap(){
@@ -206,8 +258,11 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
                 console.log(this.Drawnpoints)
               }
 
-              that.uiService.setSelectedPolygon(`${JSON.stringify(this.Drawnpolygons)}`)
-              that.uiService.setSelectedPoint(`${JSON.stringify(this.Drawnpoints)}`)
+              this.DrawnCentroid = turf.bbox(data) //turf.bbox(data)
+              console.log("centroid", this.DrawnCentroid)
+
+              that.uiService.setSelectedPolygon(`${JSON.stringify(this.Drawnpolygons[0].geometry.coordinates)}`)
+              that.uiService.setSelectedPoint(this.DrawnCentroid)
 
             //Calculating points within the polygons
               var ptsWithin = turf.pointsWithinPolygon(pointworldgeoJSON, turf.multiPolygon([[turf.coordAll(data)]]));
@@ -234,6 +289,14 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
       }
     }
 
+    // add popup to drawn polygon
+  this.map.on('click', 'this.draw', function (e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML('<b>Hi popup!</b>')
+      .addTo(this.map);
+  });
+
   }
 
   enableFunction(){
@@ -246,9 +309,6 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
     this.map.removeControl(this.draw);
     }
   }
-
-
-
 
 /*
 //TO DELETE
@@ -268,14 +328,14 @@ const onlyPoly = 'GeoJSON:' + JSON.stringify(data)
 
 this.map.on('load', () => {
 // Add a data source containing GeoJSON data.
-this.map.addSource('maine', {
+this.map.addSource('CampPoly', {
 'type': 'geojson',
 'data': {
 'type': 'Feature',
 'properties': {},
 'geometry': {
  'type': 'Polygon',
- // These coordinates outline Maine.
+ // These coordinates outline CampPoly.
  'coordinates': [
    [
      [14.3, 52.1],
@@ -289,9 +349,9 @@ this.map.addSource('maine', {
 
 // Add a new layer to visualize the polygon.
 this.map.addLayer({
-'id': 'maine',
+'id': 'CampPoly',
 'type': 'fill',
-'source': 'maine', // reference the data source
+'source': 'CampPoly', // reference the data source
 'layout': {},
 'paint': {
 'fill-color': '#0080ff', // blue color fill
@@ -302,7 +362,7 @@ this.map.addLayer({
 this.map.addLayer({
 'id': 'outline',
 'type': 'line',
-'source': 'maine',
+'source': 'CampPoly',
 'layout': {},
 'paint': {
 'line-color': '#000',
@@ -378,27 +438,7 @@ paint: {}
 });
 */
 
-//POINTS IN POLYGON
 
-/*
-var points = turf.points([
- [15.1, 52.7],
- [14.3, 52.5],
- [12.5, 52.3],
- [14.9, 52.9]
-]);
-
-var searchWithin = turf.polygon([[
-[14.3, 52.1],
-[14.7, 52.7],
-[14.1, 52.7],
-[14.3, 52.1]
-]], { name: 'poly1', population: 400});
-
-var polygeoJSONcoords = ([[turf.coordAll(data)]]);
-console.log('polygeoJSONcoords',polygeoJSONcoords);
-
-*/
 
     //#ORIGINAL
 
@@ -1314,3 +1354,7 @@ function worldLocalJSONData(worldLocalJSONData: any) {
 function control(control: any) {
   throw new Error('Function not implemented.');
 }
+function JSONObject(coordinates: any): turf.helpers.Position[][] {
+  throw new Error('Function not implemented.');
+}
+
