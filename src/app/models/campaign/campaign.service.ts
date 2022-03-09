@@ -60,7 +60,7 @@ export class CampaignService {
     //     )
     // }
 
-    createCampaign(title: string, polygonDraw: string, aboutMe: string, campaignGoals: string, campaignDetails: string, startDate: Date, endDate: Date, phenomena: string): Observable<Campaign> {
+    createCampaign(title: string, polygonDraw: number[], aboutMe: string, campaignGoals: string, campaignDetails: string, startDate: Date, endDate: Date, phenomena: string): Observable<Campaign> {
         return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, {title, polygonDraw, aboutMe, campaignGoals, campaignDetails, startDate, endDate, phenomena}).pipe(
             tap( value => {
                 console.log(value);

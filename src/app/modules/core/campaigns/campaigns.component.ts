@@ -102,16 +102,16 @@ export class CampaignsComponent implements OnInit {
     this.campaignToBeUpdated.endDate = new Date(event);
   }
 
-  postThread(){
-    //this.threadService.createSlack().subscribe();
-    var xmlhttp = new XMLHttpRequest();
+  // postThread(){
+  //   //this.threadService.createSlack().subscribe();
+  //   var xmlhttp = new XMLHttpRequest();
 
-    xmlhttp.open('POST', `https://slack.com/api/conversations.create?name=jstest&is_private=false&pretty=1`);
-    //xmlhttp.setRequestHeader('Content-type', 'application/json');
-    //xmlhttp.setRequestHeader('Authorization', 'Bearer ' + this.slackToken);
-    xmlhttp.send("token=xoxp-2966864970930-2969169630004-3008901576819-0b8e12f0c75789fc94ae67cba7707c2f");
+  //   xmlhttp.open('POST', `https://slack.com/api/conversations.create?name=jstest&is_private=false&pretty=1`);
+  //   //xmlhttp.setRequestHeader('Content-type', 'application/json');
+  //   //xmlhttp.setRequestHeader('Authorization', 'Bearer ' + this.slackToken);
+  //   xmlhttp.send("token=xoxp-2966864970930-2969169630004-3008901576819-0b8e12f0c75789fc94ae67cba7707c2f");
 
-  }
+  // }
 
 
 
