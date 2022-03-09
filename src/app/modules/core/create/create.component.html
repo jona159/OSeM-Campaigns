@@ -217,7 +217,7 @@
       </select>
     </div>   -->
 
-    <!-- <div class="select is-multiple">
+    <div class="select is-multiple">
       <label for="power">Phenomena</label>
       <select multiple
               size="10"
@@ -229,8 +229,8 @@
                 [value]="one.phenomenonLabel[0].value">{{one.phenomenonLabel[0].value}}
               </option>
       </select>
-    </div> -->
-    <div class="field">
+    </div> 
+    <!-- <div class="field">
             <label for="power">Phenomena</label>
             <input
                     id="power"
@@ -239,7 +239,7 @@
                     required
                     [(ngModel)]="model.phenomena"
                     name="phenomena">
-    </div>
+    </div> -->
     <div>
       <button
             type="submit"
@@ -299,7 +299,7 @@
     </div>
   </div>
 
-  <div *ngFor="let campaign of allCampaigns$ | async">
+  <!-- <div *ngFor="let campaign of allCampaigns$ | async">
 
 
     campaign{{campaign.title}}
@@ -310,4 +310,4 @@
 
     {{singleCampaign.title}}
 
-  </div>
+  </div> -->
