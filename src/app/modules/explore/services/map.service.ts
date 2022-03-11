@@ -94,129 +94,144 @@ export class MapService {
   }
 
 
-  // function for zooming into specific campaign
-  zoomMe(coordinates: any) {
+// function for zooming into specific campaign
+zoomMe(coordinates: any) {
 
-    this.Campaign_coord = JSON.parse(coordinates)
-    this.CampaignPol = turf.polygon(this.Campaign_coord);
-    this.bbox_campaign = turf.bbox(this.CampaignPol);
-    console.log("Campaign_coord",this.CampaignPol);
+this.Campaign_coord = JSON.parse(coordinates)
+this.CampaignPol = turf.polygon(this.Campaign_coord);
+this.bbox_campaign = turf.bbox(this.CampaignPol);
+console.log("Campaign_coord", this.CampaignPol);
 
-    this.map.fitBounds([
-      [this.bbox_campaign[0],this.bbox_campaign[1]],
-      [this.bbox_campaign[2],this.bbox_campaign[3]]
-    ]);
+this.map.fitBounds([
+  [this.bbox_campaign[0], this.bbox_campaign[1]],
+  [this.bbox_campaign[2], this.bbox_campaign[3]]
+]);
 
-        //PLOTTING polygons
-      //this.map.on('load', () => {
-      // Add a data source containing GeoJSON data.
+//PLOTTING polygons
+//this.map.on('load', () => {
+// Add a data source containing GeoJSON data.
 
-      this.map.addSource('CampPolyg', {
-      type: 'geojson',
-      data: {
-        type: 'Feature',
-        geometry: {
+// Check the existence of layer `CampPolygfill`
+// to create it, if not created yet (youqam)
+if (!this.map.getLayer("CampPolygfill")) {
+  this.map.addSource('CampPolyg', {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      geometry: {
         type: 'Polygon',
         // These coordinates outline CampPolygFill.
         coordinates: this.Campaign_coord
-        }
-        },
-      });
+      }
+    },
+  });
 
-      // Add a new layer to visualize the polygon.
-      this.map.addLayer({
-      'id': 'CampPolygfill',
-      'type': 'fill',
-      'source': 'CampPolyg', // reference the data source
-      'layout': {},
-      'paint': {
+  // Add a new layer to visualize the polygon.
+  this.map.addLayer({
+    'id': 'CampPolygfill',
+    'type': 'fill',
+    'source': 'CampPolyg', // reference the data source
+    'layout': {},
+    'paint': {
       'fill-color': '#0080ff', // blue color fill
       'fill-opacity': 0.5
-      }
-      });
-      // Add a black outline around the polygon.
-      this.map.addLayer({
-      'id': 'CampPolygFillOutline',
-      'type': 'line',
-      'source': 'CampPolyg',
-      'layout': {},
-      'paint': {
+    }
+  });
+  // Add a black outline around the polygon.
+  this.map.addLayer({
+    'id': 'CampPolygFillOutline',
+    'type': 'line',
+    'source': 'CampPolyg',
+    'layout': {},
+    'paint': {
       'line-color': '#000',
       'line-width': 3
-      }
-      });
-
-    this.map.on('moveend', () => {
-      console.log('A moveend event occurred.');
-
-      const geojsonSource = this.map.getSource('CampPolyg');
-
-      geojsonSource.setData({
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          geometry: {
-          type: 'Polygon',
-          // These coordinates outline CampPolygFill.
-          coordinates: this.Campaign_coord
-          }
-          },
-        });
-
-      console.log("geojsonSource",geojsonSource)
-
-      if (this.map.getLayer("CampPolygfill")) {
-        this.map.removeLayer("CampPolygfill");
-      }
-      if (this.map.getSource("CampPolyg")) {
-        this.map.removeSource("CampPolyg");
-      }
-      if (this.map.getLayer("CampPolygFillOutline")) {
-        this.map.removeLayer("CampPolygFillOutline");
-      }
-
-
-      this.map.addSource('CampPolyg2', {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          geometry: {
-          type: 'Polygon',
-          // These coordinates outline CampPolygFill.
-          coordinates: this.Campaign_coord
-          }
-          },
-        });
-
-        this.map.updateSource('CampPolyg2', {
-          type: 'geojson',
-          data: {
-            type: 'Feature',
-            geometry: {
-            type: 'Polygon',
-            // These coordinates outline CampPolygFill.
-            coordinates: this.Campaign_coord
-            }
-            },
-          });
-
-      // Add a new layer to visualize the polygon.
-      this.map.addLayer({
-        'id': 'CampPolygfill2',
-        'type': 'fill',
-        'source': 'CampPolyg2', // reference the data source
-        'layout': {},
-        'paint': {
-        'fill-color': '#34805f', // blue color fill
-        'fill-opacity': 0.5
-        }
-        });
-
-      });
-
     }
+  });
+  // if the layer is already created, just update the coordinates with the new polyon (youqam)
+} else {
+  this.map.getSource('CampPolyg').setData(
+    {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          // These coordinates outline CampPolygFill.
+          coordinates: this.Campaign_coord
+        }
+    }
+  );
+}
 
+/*
+this.map.on('moveend', () => {
+  console.log('A moveend event occurred.');
 
+  const geojsonSource = this.map.getSource('CampPolyg');
+
+  geojsonSource.setData({
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        // These coordinates outline CampPolygFill.
+        coordinates: this.Campaign_coord
+      }
+    },
+  });
+
+  console.log("geojsonSource", geojsonSource)
+
+  // did not understand what do you need this for ?? (youqam)
+   if (this.map.getLayer("CampPolygfill")) {
+    this.map.removeLayer("CampPolygfill");
+  }
+  if (this.map.getSource("CampPolyg")) {
+    this.map.removeSource("CampPolyg");
+  }
+  if (this.map.getLayer("CampPolygFillOutline")) {
+    this.map.removeLayer("CampPolygFillOutline");
+  }
+ */
+
+  /* this.map.addSource('CampPolyg2', {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        // These coordinates outline CampPolygFill.
+        coordinates: this.Campaign_coord
+      }
+    },
+  });
+
+  this.map.updateSource('CampPolyg2', {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        // These coordinates outline CampPolygFill.
+        coordinates: this.Campaign_coord
+      }
+    },
+  }); */
+
+  // Add a new layer to visualize the polygon.
+  /* this.map.addLayer({
+    'id': 'CampPolygfill2',
+    'type': 'fill',
+    'source': 'CampPolyg2', // reference the data source
+    'layout': {},
+    'paint': {
+      'fill-color': '#34805f', // blue color fill
+      'fill-opacity': 0.5
+    }
+  });
+
+});*/
+  }
 
   // initialize the map, TODO: Dynamic start point
   generateMap(elementName) {
