@@ -1,5 +1,5 @@
 import { MapService } from 'src/app/modules/explore/services/map.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignQuery } from 'src/app/models/campaign/campaign.query';
 import { CampaignService } from 'src/app/models/campaign/campaign.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,7 +20,7 @@ import { ThreadStore } from 'src/app/models/threads/threads.store';
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss']
 })
-export class CampaignsComponent implements OnInit {
+export class CampaignsComponent implements OnInit, OnDestroy {
 
   loggedIn$ = this.sessionQuery.isLoggedIn$;
 
@@ -48,13 +48,17 @@ export class CampaignsComponent implements OnInit {
   view_ac='';
   //Function for opening and closing accordion
   changeAccordion(ac) {
-    if (this.view_update !== '')
+    if (this.view_update !== ''){
       this.view_update = '';
+      this.mapService.disableCampPolygons();
+    }
     if (ac == this.view_ac) {
       this.view_ac = '';
+      this.mapService.disableCampPolygons();
     }
     else {
       this.view_ac = ac;
+      this.mapService.enableCampPolygons();
     }
   }
 
@@ -86,6 +90,11 @@ export class CampaignsComponent implements OnInit {
     this.phenomena = this.phenomenaService.getPhenomena();
     //Hide menu on the left side
     this.uiService.setFilterVisible(false);
+  }
+
+  ngOnDestroy(){
+    console.log("Destroy");
+    this.mapService.disableCampPolygons();
   }
 
   //zoom to currently selected campaign

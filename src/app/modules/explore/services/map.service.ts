@@ -105,8 +105,8 @@ this.bbox_campaign = turf.bbox(this.CampaignPol);
 console.log("Campaign_coord", this.CampaignPol);
 // function to zoom into bbox
 this.map.fitBounds([
-  [this.bbox_campaign[0], this.bbox_campaign[1]],
-  [this.bbox_campaign[2], this.bbox_campaign[3]]
+  [this.bbox_campaign[0], this.bbox_campaign[1]],  //moving the visualization 0.1 degrees to the left
+  [this.bbox_campaign[2], this.bbox_campaign[3]]   //moving the visualization 0.1 degrees to the left
 ]);
 
 //PLOTTING polygons
@@ -134,19 +134,20 @@ if (!this.map.getLayer("CampPolygfill")) {
     'source': 'CampPolyg', // reference the data source
     'layout': {},
     'paint': {
-      'fill-color': '#0080ff', // blue color fill
-      'fill-opacity': 0.5
+      "fill-color": "#D20C0C",
+      "fill-outline-color": "#D20C0C",
+      "fill-opacity": 0.1
     }
   });
   // Add a black outline around the polygon.
   this.map.addLayer({
-    'id': 'CampPolygFillOutline',
+    'id': 'CampPolygfillOutline',
     'type': 'line',
     'source': 'CampPolyg',
     'layout': {},
     'paint': {
-      'line-color': '#000',
-      'line-width': 3
+      'line-color': '#D20C0C',
+      "line-width": 2
     }
   });
   // if the layer is already created, just update the coordinates with the new polyon
@@ -311,6 +312,7 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
 
   }
 
+  // Removing draw commands from visual when outside create campaign
   enableFunction(){
     console.log("this.draw",this.draw)
     this.map.addControl(this.draw,'top-left');
@@ -319,7 +321,20 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
   disableFunction(){
     if(this.draw) {
     this.map.removeControl(this.draw);
+    this.disableCampPolygons()
     }
+  }
+
+
+// Removing polygons from visual when outside ongoing campaign
+  enableCampPolygons(){
+    this.map.setLayoutProperty('CampPolygfill', 'visibility', 'visible');
+    this.map.setLayoutProperty('CampPolygfillOutline', 'visibility', 'visible');
+    }
+
+  disableCampPolygons(){
+    this.map.setLayoutProperty('CampPolygfill', 'visibility', 'none');
+    this.map.setLayoutProperty('CampPolygfillOutline', 'visibility', 'none');
   }
 
 
