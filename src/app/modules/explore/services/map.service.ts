@@ -31,6 +31,9 @@ import {MapboxDrawStyles} from './MapboxDrawStyle'; //adding drawing styles
 export class MapService {
 
   map;  // the map element (gets initilisaed on page load)
+  worldLocalJSONData: any = worldLocalJSONFile;
+
+  //Campaign variables
   geocoder;
   draw;
   UserLocation;
@@ -39,7 +42,6 @@ export class MapService {
   DrawnCentroid;
   Drawnpolygons_null;
   Drawnpoints_null;
-  worldLocalJSONData: any = worldLocalJSONFile;
   CampaignPol;
   bbox_campaign;
   Campaign_coord;
@@ -96,23 +98,22 @@ export class MapService {
 
 // function for zooming into specific campaign
 zoomMe(coordinates: any) {
-
+// Converting coordinates into bbox
 this.Campaign_coord = JSON.parse(coordinates)
 this.CampaignPol = turf.polygon(this.Campaign_coord);
 this.bbox_campaign = turf.bbox(this.CampaignPol);
 console.log("Campaign_coord", this.CampaignPol);
-
+// function to zoom into bbox
 this.map.fitBounds([
   [this.bbox_campaign[0], this.bbox_campaign[1]],
   [this.bbox_campaign[2], this.bbox_campaign[3]]
 ]);
 
 //PLOTTING polygons
-//this.map.on('load', () => {
-// Add a data source containing GeoJSON data.
 
-// Check the existence of layer `CampPolygfill`
-// to create it, if not created yet (youqam)
+// Add a data source containing GeoJSON data.
+// Check the existence of layer `CampPolygfill` to create it, if not created yet
+
 if (!this.map.getLayer("CampPolygfill")) {
   this.map.addSource('CampPolyg', {
     type: 'geojson',
@@ -148,7 +149,7 @@ if (!this.map.getLayer("CampPolygfill")) {
       'line-width': 3
     }
   });
-  // if the layer is already created, just update the coordinates with the new polyon (youqam)
+  // if the layer is already created, just update the coordinates with the new polyon
 } else {
   this.map.getSource('CampPolyg').setData(
     {
@@ -160,78 +161,8 @@ if (!this.map.getLayer("CampPolygfill")) {
         }
     }
   );
+  }
 }
-
-/*
-this.map.on('moveend', () => {
-  console.log('A moveend event occurred.');
-
-  const geojsonSource = this.map.getSource('CampPolyg');
-
-  geojsonSource.setData({
-    type: 'geojson',
-    data: {
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        // These coordinates outline CampPolygFill.
-        coordinates: this.Campaign_coord
-      }
-    },
-  });
-
-  console.log("geojsonSource", geojsonSource)
-
-  // did not understand what do you need this for ?? (youqam)
-   if (this.map.getLayer("CampPolygfill")) {
-    this.map.removeLayer("CampPolygfill");
-  }
-  if (this.map.getSource("CampPolyg")) {
-    this.map.removeSource("CampPolyg");
-  }
-  if (this.map.getLayer("CampPolygFillOutline")) {
-    this.map.removeLayer("CampPolygFillOutline");
-  }
- */
-
-  /* this.map.addSource('CampPolyg2', {
-    type: 'geojson',
-    data: {
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        // These coordinates outline CampPolygFill.
-        coordinates: this.Campaign_coord
-      }
-    },
-  });
-
-  this.map.updateSource('CampPolyg2', {
-    type: 'geojson',
-    data: {
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        // These coordinates outline CampPolygFill.
-        coordinates: this.Campaign_coord
-      }
-    },
-  }); */
-
-  // Add a new layer to visualize the polygon.
-  /* this.map.addLayer({
-    'id': 'CampPolygfill2',
-    'type': 'fill',
-    'source': 'CampPolyg2', // reference the data source
-    'layout': {},
-    'paint': {
-      'fill-color': '#34805f', // blue color fill
-      'fill-opacity': 0.5
-    }
-  });
-
-});*/
-  }
 
   // initialize the map, TODO: Dynamic start point
   generateMap(elementName) {
@@ -292,7 +223,7 @@ this.map.on('moveend', () => {
       controls: {
         combine_features: false,
         uncombine_features: false,
-        point: true,
+        point: false,
         line_string: false,
         polygon: true,
         trash: true
@@ -311,7 +242,6 @@ var pointworldgeoJSON = turf.points(turf.coordAll(this.worldLocalJSONData));
 console.log('pointWorldgeoJSON',pointworldgeoJSON);
 
 //POLYGON AREA CALCULATION
-
     this.map.on('draw.create', updateArea);
     this.map.on('draw.delete', updateArea);
     this.map.on('draw.update', updateArea);
@@ -391,134 +321,6 @@ console.log('pointWorldgeoJSON',pointworldgeoJSON);
     this.map.removeControl(this.draw);
     }
   }
-
-/*
-//TO DELETE
-var convertedData = JSON.stringify(data);
-console.log('Get ALL',data.features);
-console.log('Last feature number',data.features.length);
-const lastFeature = data.features.length - 1;
-const coords_last = data.features[lastFeature].geometry.coordinates[1];
-console.log('Last feature coord',coords_last);
-
-const json = data.features;
-if (draw.getMode() === 'draw_polygon') {
-console.log('shift',data.features.shift);
-const onlyPoly = 'GeoJSON:' + JSON.stringify(data)
-}
-//TO DELETE BEFORE
-
-this.map.on('load', () => {
-// Add a data source containing GeoJSON data.
-this.map.addSource('CampPolygFill', {
-'type': 'geojson',
-'data': {
-'type': 'Feature',
-'properties': {},
-'geometry': {
- 'type': 'Polygon',
- // These coordinates outline CampPolygFill.
- 'coordinates': [
-   [
-     [14.3, 52.1],
-     [14.7, 52.7],
-     [14.1, 52.7],
-     [14.3, 52.1]]
-   ]
-}
-}
-});
-
-// Add a new layer to visualize the polygon.
-this.map.addLayer({
-'id': 'CampPolygFill',
-'type': 'fill',
-'source': 'CampPolygFill', // reference the data source
-'layout': {},
-'paint': {
-'fill-color': '#0080ff', // blue color fill
-'fill-opacity': 0.5
-}
-});
-// Add a black outline around the polygon.
-this.map.addLayer({
-'id': 'outline',
-'type': 'line',
-'source': 'CampPolygFill',
-'layout': {},
-'paint': {
-'line-color': '#000',
-'line-width': 3
-}
-});
-});
-
-const hospitals: FeatureCollection = {
-'type': 'FeatureCollection',
-'features': [
-{
-'type': 'Feature',
-'properties': {
-'Name': 'VA Medical Center -- Leestown Division',
-'Address': '2250 Leestown Rd'
-},
-'geometry': {
-'type': 'Point',
-'coordinates': [14.3, 52.5]
-}
-},
-{
-'type': 'Feature',
-'properties': {
-'Name': 'St. Joseph East',
-'Address': '150 N Eagle Creek Dr'
-},
-'geometry': {
-'type': 'Point',
-'coordinates': [15.1, 52.7]
-}
-},
-{
-'type': 'Feature',
-'properties': {
-'Name': 'St. East',
-'Address': 'Creek Dr'
-},
-'geometry': {
-'type': 'Point',
-'coordinates': [12.5, 52.3]
-}
-},
-{
-'type': 'Feature',
-'properties': {
-'Name': 'Joseph',
-'Address': '200 Dr'
-},
-'geometry': {
-'type': 'Point',
-'coordinates': [14.9, 52.9]
-}
-},
-]
-};
-
-this.map.on('load', () => {
-this.map.addLayer({
-id: 'hospitals',
-type: 'symbol',
-source: {
-type: 'geojson',
-data: hospitals
-},
-layout: {
-'icon-image': 'hospital-15',
-'icon-allow-overlap': true
-},
-paint: {}
-});
-});
-*/
 
 
 
