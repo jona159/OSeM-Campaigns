@@ -110,16 +110,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   formatEnddate(event){
     this.campaignToBeUpdated.endDate = new Date(event);
   }
-
   
-  //  addParticipant(event){
-  //    console.log(event);
-  //    this.sessionQuery.user$.subscribe(result =>
-  //      this.currentUser = result.name);
-  //    this.campaignToBeUpdated.participants.push(this.currentUser);
-  //    console.log(this.campaignToBeUpdated);
-  //  }
-
   showUpdateForm(campaign: Campaign){
     this.campaignToBeUpdated = {...campaign};
     this.isUpdateActivated = true;

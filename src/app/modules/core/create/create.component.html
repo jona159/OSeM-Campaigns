@@ -203,20 +203,6 @@
       </p>
   </div>
 
-   <!-- <div class="select is-multiple">
-      <label for="power">Phenomena</label>
-      <select multiple
-              size="10"
-              id="phenomena"
-              required
-              [(ngModel)]="model.phenomena"
-              name="phenomena">
-        <option *ngFor="let one of phenomena | async"
-                [value]="one.phenomenonLabel[0].value">{{one.phenomenonLabel[0].value}}
-              </option>
-      </select>
-    </div>   -->
-
     <div class="select is-multiple">
       <label for="power">Phenomena</label>
       <select multiple
@@ -230,17 +216,7 @@
               </option>
       </select>
     </div>
-    <!-- <div class="field">
-            <label for="power">Phenomena</label>
-            <input
-                    id="power"
-                    type="text"
-                    value="PM10"
-                    required
-                    [(ngModel)]="model.phenomena"
-                    name="phenomena">
-    </div> -->
-    
+        
     <div>
       <button
             (click)="takeSnapshot()"
@@ -301,15 +277,4 @@
     </div>
   </div>
 
-  <!-- <div *ngFor="let campaign of allCampaigns$ | async">
 
-
-    campaign{{campaign.title}}
-
-  </div>
-
-  <div *ngIf="singleCampaign$ | async; let singleCampaign">
-
-    {{singleCampaign.title}}
-
-  </div> -->

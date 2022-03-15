@@ -98,13 +98,11 @@ ngOnDestroy(){
 
     this.getUsername();
     
-    if(submittedForm.invalid){
-      return;
-    }
+    // if(submittedForm.invalid){
+    //   return;
+    // }
 
     const campaign ={ 
-      //_id: uuid.v4(), 
-      //_id: newID,
       title: submittedForm.value.title,
       polygonDraw: submittedForm.value.polygonDraw,
       owner: this.username,
@@ -118,12 +116,12 @@ ngOnDestroy(){
       participants: [] 
     }
 
-    console.log(campaign);
-    // if(campaign._id.match(/^[0-9a-fA-F]{24}$/)){
-    //   console.log('matches');
-    // }
+    if(campaign.polygonDraw.length === 0){
+      alert('Please fill out the whole form and create a polygon using the polygon marker tool on the left side');
+    }
 
-        
+    console.log(campaign);
+           
     this.campaignservice.createCampaign(campaign.title, campaign.polygonDraw, campaign.owner, campaign.aboutMe, campaign.campaignGoals, campaign.campaignDetails, campaign.startDate, campaign.endDate, campaign.phenomena, campaign.image).subscribe(result => {
       this.campaignStore.update(state => {
         console.log(state);
@@ -136,24 +134,6 @@ ngOnDestroy(){
         };
       });
       this.router.navigateByUrl('/(sidebar:m/campaigns)');
-    });
-
-
-  
-  // const campaign: Campaign = { _id: uuid.v4(), 
-  //                              title: submittedForm.value.title,
-  //                              owner: 'any',
-  //                              aboutMe: submittedForm.value.aboutMe,
-  //                              campaignGoals: submittedForm.value.campaignGoals,
-  //                              campaignDetails: submittedForm.value.campaignDetails,
-  //                              startDate: submittedForm.value.startDate,
-  //                              endDate: submittedForm.value.endDate,
-  //                              phenomena: submittedForm.value.phenomena 
-  // }
-       
-  // this.createCampaignSub = this.campaignservice.createCampaign(campaign).subscribe(result => {
-  //   console.log(this.createCampaignSub);
-  //   this.router.navigateByUrl('/(sidebar:m/campaigns');
-  // });                             
+    });                         
   }
 }  

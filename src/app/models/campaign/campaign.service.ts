@@ -31,35 +31,6 @@ export class CampaignService {
        }))
     }
 
-    // getSingleCampaign(id){
-    //     return this.http.get<any>(`${environment.api_url}/users/campaign/${id}`).pipe(tap(entity => {
-    //         this.campaignStore.upsert(id, entity.data)
-    //         console.log(entity.data);
-    //     }))
-    // }
-
-    // getMyCampaigns(){
-    //     let headers = new HttpHeaders();
-    //     headers = headers.append('Authorization', 'Bearer '+ window.localStorage.getItem('sb_accesstoken'));
-
-    //     this.http.get(this.AUTH_API_URL + '/users/me/campaigns', {headers: headers}).subscribe(res:any) => {
-    //         console.log(res);
-    //     }
-    //}
-
-    // createCampaign(campaign: Campaign): Observable<Campaign> {
-
-    //     let headers = new HttpHeaders();
-    //     headers = headers.append('Authorization', 'Bearer '+window.localStorage.getItem('sb_accesstoken'));
-    //     return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, campaign, {headers:headers}).pipe(
-    //         tap( value => {
-    //             console.log(campaign);
-    //             this.campaignStore.add([value]);
-    //             //alert('Campaign was created successfully!');
-    //         })
-    //     )
-    // }
-
     createCampaign(title: string, polygonDraw: number[], owner: string, aboutMe: string, campaignGoals: string, campaignDetails: string, startDate: Date, endDate: Date, phenomena: string, image: string): Observable<Campaign> {
         return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, {title, polygonDraw, owner, aboutMe, campaignGoals, campaignDetails, startDate, endDate, phenomena, image}).pipe(
             tap( value => {
@@ -78,16 +49,7 @@ export class CampaignService {
             })
         )
     }
-
-       
-    // add(campaign: Campaign){
-    //     this.campaignStore.add(campaign);
-    // }
-
-    // update(id, campaign: Partial<Campaign>){
-    //     this.campaignStore.update(id, campaign);
-    // }
-
+    
     deleteCampaign(id: string): Observable<any> {
         return this.http.delete(`${environment.api_url}/users/campaign/${id}`).pipe(
             tap( result => {
