@@ -3,6 +3,7 @@ export class FormDesign {
   constructor(
     public title?: string,
     public name?: string,
+    public owner?: string,
     public aboutMe?: string,
     public campaignReasons?: string,
     public campaignGoals?: string,
@@ -11,7 +12,8 @@ export class FormDesign {
     public endDate?: Date,
     public polygonDraw?: string,
     public pointDraw?: string,
-    public phenomena?: string
+    public phenomena?: string,
+    public image?: string
   ) {  }
 
 }

@@ -11,9 +11,7 @@ import { Subscription } from 'rxjs';
 import * as uuid from 'uuid';
 import { MapService } from 'src/app/modules/explore/services/map.service';
 import { UiQuery } from 'src/app/models/ui/state/ui.query';
-
-
-
+import { SessionQuery } from 'src/app/models/session/state/session.query';
 
 
 @Component({
@@ -24,6 +22,12 @@ import { UiQuery } from 'src/app/models/ui/state/ui.query';
 export class CreateComponent implements OnInit, OnDestroy {
 
   createCampaignSub: Subscription;
+  
+  snapshot
+
+  username
+
+  currentUser= this.sessionQuery.user$;
 
   campaigns =[];
 
@@ -42,7 +46,7 @@ export class CreateComponent implements OnInit, OnDestroy {
  //             this.submitted = true;
  //           }
 
-  constructor(private campaignStore: CampaignStore, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private phenomenaService: PhenomenaService, private uiService: UiService, private activatedRoute: ActivatedRoute, private router: Router, private mapService: MapService, private uiQuery: UiQuery) {}
+  constructor(private campaignStore: CampaignStore, private campaignQuery: CampaignQuery, private campaignservice: CampaignService, private phenomenaService: PhenomenaService, private uiService: UiService, private activatedRoute: ActivatedRoute, private router: Router, private mapService: MapService, private uiQuery: UiQuery, private sessionQuery: SessionQuery) {}
 
   ngOnInit(): void {
      this.campaignQuery.getCampaigns().subscribe(res => this.campaigns = res);
@@ -58,6 +62,16 @@ export class CreateComponent implements OnInit, OnDestroy {
      
 
 }
+
+takeSnapshot() {
+  this.snapshot = this.mapService.takeSnapshot();
+  console.log(this.snapshot);
+}
+
+getUsername(){
+  this.currentUser.subscribe(result =>
+         this.username = result.name);
+  }
 ngOnDestroy(){
   console.log("Destroy");
   this.uiService.setdrawmode(false);
@@ -65,19 +79,7 @@ ngOnDestroy(){
 
   onSubmit(submittedForm){
     
-    function formatTimeString(s){
-      var b = s.split("-", 3);
-      return b[0] + '-' + b[1] + '-' + b[2] + 'T15:00:00Z';
-    }
-
-    // console.log(formatTimeString(submittedForm.value.startdate));
     
-    // let sd = formatTimeString(submittedForm.value.startdate);
-
-    // let d = new Date('2021-12-03');
-
-    // console.log(d);
-
     let startD = new Date(submittedForm.value.startdate);
 
     let x = startD.toISOString();
@@ -94,11 +96,8 @@ ngOnDestroy(){
 
     console.log(endD);
 
-    //const bson = require('bson');
-
-    //let newID = new bson.ObjectId();
-    //newID = newID.toString();
-                     
+    this.getUsername();
+    
     if(submittedForm.invalid){
       return;
     }
@@ -108,13 +107,14 @@ ngOnDestroy(){
       //_id: newID,
       title: submittedForm.value.title,
       polygonDraw: submittedForm.value.polygonDraw,
-      owner: 'any',
+      owner: this.username,
       aboutMe: submittedForm.value.aboutme,
       campaignGoals: submittedForm.value.campaigngoals,
       campaignDetails: submittedForm.value.campaigndetails,
       startDate: startD,
       endDate: endD,
       phenomena: submittedForm.value.phenomena,
+      image: this.snapshot,
       participants: [] 
     }
 
@@ -124,7 +124,7 @@ ngOnDestroy(){
     // }
 
         
-    this.campaignservice.createCampaign(campaign.title, campaign.polygonDraw, campaign.aboutMe, campaign.campaignGoals, campaign.campaignDetails, campaign.startDate, campaign.endDate, campaign.phenomena).subscribe(result => {
+    this.campaignservice.createCampaign(campaign.title, campaign.polygonDraw, campaign.owner, campaign.aboutMe, campaign.campaignGoals, campaign.campaignDetails, campaign.startDate, campaign.endDate, campaign.phenomena, campaign.image).subscribe(result => {
       this.campaignStore.update(state => {
         console.log(state);
         

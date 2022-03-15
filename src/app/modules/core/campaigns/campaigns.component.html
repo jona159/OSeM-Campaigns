@@ -1,7 +1,7 @@
 <section class="section" *ngFor="let campaign of allCampaigns$ | async; let i = index;">
   <div class="item-container">
   <div class="img-container">
-      <img src="https://i.stack.imgur.com/WpMdM.png" alt="Location map">
+      <img [src]= "campaign.image" alt="Location map">
       <div class="course-details">
           <p class="date">
               Starting {{ campaign.startDate }}
@@ -16,10 +16,12 @@
       <p class="title">{{ campaign.title }}</p>
       <p class="sub-title">Id is {{ campaign._id}}</p>
       <div class="title-separator"></div>
-      <div>
+      <div *ngIf="(loggedIn$ | async) && (currentUser | async).name === campaign.owner">
         <button class="modify_button" (click)="deleteCampaign(campaign._id)">Delete</button>
         <button class="modify_button" [ngClass]="{'active': view_update === 'ac_'+i}"
         (click)="showUpdateForm(campaign);changeUpdate('ac_'+i);clickToZoom(campaign.polygonDraw)">Update</button>
+      </div>
+      <div>  
         <button class="modify_button" (click)="joinCampaign(campaign)">Join</button>
 
 
@@ -135,6 +137,18 @@
         </option>
       </select>
       </div>
+      <div>
+        <label for="image">Campaign Image</label><br>
+        <input
+          type = "text"
+          id="title"
+          name="title"
+          class ="input is-small"
+          required
+          [disabled] = "view_update !== 'ac_'+i"
+          [(ngModel)]="campaignToBeUpdated.title"
+          style = "width:400px"/>
+       </div>
       <br>
        <button class="modify_button" [disabled]="updateForm.invalid || view_update !== 'ac_'+i " type="submit"
        >Save</button>

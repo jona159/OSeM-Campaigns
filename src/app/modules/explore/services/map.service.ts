@@ -46,6 +46,8 @@ export class MapService {
   bbox_campaign;
   Campaign_coord;
 
+  snapshot;
+
   worldData:BehaviorSubject<any>; // all the live Data as geojson, gets pulled on page load
   selectedPheno$ = this.uiQuery.selectSelectedPheno$;
 
@@ -94,6 +96,11 @@ export class MapService {
   ) {
     this.worldData = new BehaviorSubject(false);
   }
+
+takeSnapshot(){
+  this.snapshot = this.map.getCanvas().toDataURL('image/jpeg', 0.00001);
+  return this.snapshot
+}
 
 
 // function for zooming into specific campaign
@@ -176,7 +183,8 @@ if (!this.map.getLayer("CampPolygfill")) {
       style: 'mapbox://styles/mapbox/light-v9',
       center: [13.5, 52.4],
       zoom: 8,
-      pitch: 21
+      pitch: 21,
+      preserveDrawingBuffer: true
     });
 
     //GPS LOCATION

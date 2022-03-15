@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionQuery } from 'src/app/models/session/state/session.query';
+import { NotificationsQuery } from 'src/app/models/notifications/notifications.query';
+import { NotificationsService } from 'src/app/models/notifications/notifications.service';
 
 @Component({
   selector: 'osem-notifications-container',
@@ -7,7 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationsContainerComponent implements OnInit {
 
-  constructor() { }
+  loggedIn$ = this.sessionQuery.isLoggedIn$;
+  user$ = this.sessionQuery.user$;
+
+  notifications$ = this.notificationsQuery.notifications$;
+  areNotificationsLoaded$ = this.notificationsQuery.areNotificationsLoaded$;
+  unread$ = this.notificationsQuery.unread$;
+
+  constructor(private notificationsQuery: NotificationsQuery, private notificationsService: NotificationsService, private sessionQuery: SessionQuery) { }
 
   ngOnInit() {
   }

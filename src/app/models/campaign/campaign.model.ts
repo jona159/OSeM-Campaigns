@@ -13,6 +13,7 @@ export interface Campaign {
   pointDraw: string;
   phenomena: Array<string>;
   participants: Array<string>;
+  image: string; 
 }
 
 

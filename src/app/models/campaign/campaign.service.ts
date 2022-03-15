@@ -60,8 +60,8 @@ export class CampaignService {
     //     )
     // }
 
-    createCampaign(title: string, polygonDraw: number[], aboutMe: string, campaignGoals: string, campaignDetails: string, startDate: Date, endDate: Date, phenomena: string): Observable<Campaign> {
-        return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, {title, polygonDraw, aboutMe, campaignGoals, campaignDetails, startDate, endDate, phenomena}).pipe(
+    createCampaign(title: string, polygonDraw: number[], owner: string, aboutMe: string, campaignGoals: string, campaignDetails: string, startDate: Date, endDate: Date, phenomena: string, image: string): Observable<Campaign> {
+        return this.http.post<Campaign>(`${environment.api_url}/users/campaign`, {title, polygonDraw, owner, aboutMe, campaignGoals, campaignDetails, startDate, endDate, phenomena, image}).pipe(
             tap( value => {
                 console.log(value);
                 this.campaignStore.add([value]);
@@ -92,7 +92,7 @@ export class CampaignService {
         return this.http.delete(`${environment.api_url}/users/campaign/${id}`).pipe(
             tap( result => {
                 this.campaignStore.remove(id);
-                alert('Campaign deleted!');
+                //alert('Campaign deleted!');
             })
         )
     }

@@ -240,8 +240,10 @@
                     [(ngModel)]="model.phenomena"
                     name="phenomena">
     </div> -->
+    
     <div>
       <button
+            (click)="takeSnapshot()"
             type="submit"
             class="button is-dark"
             [disabled]="createForm.invalid">
