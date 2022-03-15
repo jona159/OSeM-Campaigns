@@ -12,8 +12,6 @@ import { PhenomenaService } from '../services/phenomena.service';
 import { SessionService } from 'src/app/models/session/state/session.service';
 import { SessionQuery } from 'src/app/models/session/state/session.query';
 import { UiService } from 'src/app/models/ui/state/ui.service';
-import { ThreadService } from 'src/app/models/threads/threads.service';
-import { ThreadStore } from 'src/app/models/threads/threads.store';
 
 @Component({
   selector: 'osem-campaigns',
@@ -24,6 +22,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
 
   loggedIn$ = this.sessionQuery.isLoggedIn$;
 
+  username
+  
   currentUser= this.sessionQuery.user$;
 
   allCampaigns$ = this.campaignQuery.selectAll();
@@ -31,8 +31,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   campaignToBeUpdated: any;
 
   isUpdateActivated = false;
-
-  threadFormActivated = false;
 
   updateCampaignSub: Subscription;
 
@@ -74,8 +72,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
               private datePipe : DatePipe,
               private campaignQuery: CampaignQuery,
               private campaignservice: CampaignService,
-              private threadService: ThreadService,
-              private threadStore: ThreadStore,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private uiService: UiService,
@@ -90,6 +86,11 @@ export class CampaignsComponent implements OnInit, OnDestroy {
       console.log(result.name);
     })
   }
+
+  getUsername(){
+    this.currentUser.subscribe(result =>
+           this.username = result.name);
+    }
 
   ngOnDestroy(){
     console.log("Destroy");
@@ -126,24 +127,25 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     console.log(this.campaignToBeUpdated);
   }
 
-  //  joinCampaign(campaign: Campaign){
-  //    this.campaignToBeUpdated = {...campaign};
-  //    console.log(this.campaignToBeUpdated);
-  //    this.sessionQuery.user$.subscribe(result =>
-  //     this.currentUser = result.name);
+  joinCampaign(campaign: Campaign){
+  //     this.campaignToBeUpdated = {...campaign};
+  //     console.log(this.campaignToBeUpdated);
+  //     this.getUsername();
+  //     console.log(this.username);
+  //     // this.sessionQuery.user$.subscribe(result =>
+  //     //  this.currentUser = result.name);
+  //  //alert('Follow this link to join the discussion on Slack: https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
 
-  //   //alert('Follow this link to join the discussion on Slack: https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
-
-  //    console.log(this.currentUser);
-  //    this.campaignToBeUpdated.participants =this.currentUser;
-  //    console.log(this.campaignToBeUpdated);
-  //   this.updateCampaignSub = this.campaignservice.updateCampaign(
-  //       this.campaignToBeUpdated._id, this.campaignToBeUpdated).subscribe(result =>
-  //        console.log(result)
-  //        );
-  //     //this.campaignToBeUpdated = null;
-  //     window.open('https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
-  //   }
+  //     //console.log(this.currentUser);
+  //     this.campaignToBeUpdated.participants =this.username;
+  //     console.log(this.campaignToBeUpdated);
+  //    this.updateCampaignSub = this.campaignservice.updateCampaign(
+  //        this.campaignToBeUpdated._id, this.campaignToBeUpdated).subscribe(result =>
+  //         console.log(result)
+  //         );
+  //      //this.campaignToBeUpdated = null;
+        window.open('https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
+      }
 
   updateCampaign(updateForm) {
       // let sd= updateForm.value.startDate;

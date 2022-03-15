@@ -41,14 +41,10 @@ import { VisFormComponent } from './vis-form/vis-form.component';
 import { CreateComponent } from './create/create.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { CampaignService } from 'src/app/models/campaign/campaign.service';
-import { ForumComponent } from './forum/forum.component';
-import { ThreadsComponent } from './threads/threads.component';
-import { NotificationsViewerComponent } from './notifications/notifications-viewer/notifications-viewer.component';
-import { NotificationsContainerComponent } from './notifications/notifications-container/notifications-container.component';
 
 
 @NgModule({
-  declarations: [FilterContainerComponent, SearchComponent, SearchContainerComponent, PhenomenonComponent, NavContainerComponent, NavRightComponent, BottomBarContainerComponent, DatepickerComponent, FilterSwitcherComponent, FilterComponent, ImpressumComponent, FaqComponent, DonateComponent, ThanksComponent, PhenoInfoComponent, PhenoInfoModalComponent, VisContainerComponent, VisComponent, FilterContainerValuesComponent, FilterValuesComponent, DatetimeModalContainerComponent, DatetimeModalComponent, SidebarMenuComponent, SidebarMenuItemsComponent, AboutComponent, PrivacyComponent, SidebarBreadcrumbsComponent, ContactComponent, NewVisContainerComponent, NewVisComponent, VisFormComponent, CreateComponent, CampaignsComponent, ForumComponent, ThreadsComponent, NotificationsViewerComponent, NotificationsContainerComponent],
+  declarations: [FilterContainerComponent, SearchComponent, SearchContainerComponent, PhenomenonComponent, NavContainerComponent, NavRightComponent, BottomBarContainerComponent, DatepickerComponent, FilterSwitcherComponent, FilterComponent, ImpressumComponent, FaqComponent, DonateComponent, ThanksComponent, PhenoInfoComponent, PhenoInfoModalComponent, VisContainerComponent, VisComponent, FilterContainerValuesComponent, FilterValuesComponent, DatetimeModalContainerComponent, DatetimeModalComponent, SidebarMenuComponent, SidebarMenuItemsComponent, AboutComponent, PrivacyComponent, SidebarBreadcrumbsComponent, ContactComponent, NewVisContainerComponent, NewVisComponent, VisFormComponent, CreateComponent, CampaignsComponent],
   imports: [
     CommonModule,
     RouterModule,

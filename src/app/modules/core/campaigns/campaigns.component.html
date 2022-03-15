@@ -21,7 +21,7 @@
         <button class="modify_button" [ngClass]="{'active': view_update === 'ac_'+i}"
         (click)="showUpdateForm(campaign);changeUpdate('ac_'+i);clickToZoom(campaign.polygonDraw)">Update</button>
       </div>
-      <div>  
+      <div *ngIf="loggedIn$ | async">  
         <button class="modify_button" (click)="joinCampaign(campaign)">Join</button>
 
 
