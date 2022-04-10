@@ -1,3 +1,9 @@
+# Campaigning functionality addon
+
+This repository hosts added functionality for creating collaborative measurement campaigns. It is fork from original repository made by OpenSenseMap. Needs to be run together with backend API openSenseMap-X which is available from sensebox as well. Instructions for running repository are below.
+
+
+-----------------------------------------
 # OpenSenseMapX
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.12.
