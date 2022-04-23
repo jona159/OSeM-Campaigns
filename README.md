@@ -6,6 +6,7 @@ This repository hosts added functionality for creating collaborative measurement
 
 New campaign can be created after user logged in. Button is available on the right side menu buttom. This provides user with many different options which all need to be filled up in order for user to be able to create campaign.
 ![](/readme_images/create_campaign.PNG)
+<img src="/readme_images/create_campaign.PNG" width="50%" height="50%">
 
 ## Ongoing campaigns
 
