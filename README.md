@@ -24,7 +24,7 @@ In the process of creating new campaign, user is prompted to select area of inte
 
 By clicking to join to this campaign, user is taken to Slack dedicated channel for this specific campaign.
 
-<img src="/readme_images/slack.jpeg" width="40%" height="40%">
+<img src="/readme_images/slack.jpeg" width="80%" height="80%">
 
 -----------------------------------------
 # OpenSenseMapX
