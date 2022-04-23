@@ -26,6 +26,12 @@ By clicking to join to this campaign, user is taken to Slack dedicated channel f
 
 <img src="/readme_images/slack.jpeg" width="80%" height="80%">
 
+## Important
+
+Running this locally requires user to have MongoDB installed. When API is running, you have to register and login.
+No ongoing campaigns will be visible since youur database is empty. You can create your own campaigns which would
+then be visible in "Ongoing campaigns" sub-menu.
+
 -----------------------------------------
 # OpenSenseMapX
 
