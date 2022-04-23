@@ -5,19 +5,26 @@ This repository hosts added functionality for creating collaborative measurement
 ## New campaign
 
 New campaign can be created after user logged in. Button is available on the right side menu buttom. This provides user with many different options which all need to be filled up in order for user to be able to create campaign.
+
 <img src="/readme_images/create_campaign.PNG" width="40%" height="40%">
 
 ## Ongoing campaigns
 
 Ongoing campaigns can be found in the same right menu, by clicking on "Ongoing campaigns". User can either edit his own campaign or just have and overiview of other campaigns.
 
+<img src="/readme_images/details_campaign.PNG" width="40%" height="40%">
+
 ## E-mail notification
 
 In the process of creating new campaign, user is prompted to select area of interest by clicking on map. Chosen points will be used to create polygon, and all existing senseBox users who's senseBox is located in this polygon will receive an email notification asking them to join this campaign.
 
+<img src="/readme_images/email_content.PNG" width="40%" height="40%">
+
 ## Slack forum
 
 By clicking to join to this campaign, user is taken to Slack dedicated channel for this specific campaign.
+
+<img src="/readme_images/slack.JPEG" width="40%" height="40%">
 
 -----------------------------------------
 # OpenSenseMapX
