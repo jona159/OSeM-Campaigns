@@ -1,5 +1,4 @@
 export class FormDesign {
-
   constructor(
     public title?: string,
     public name?: string,
@@ -7,11 +6,11 @@ export class FormDesign {
     public campaignReasons?: string,
     public campaignGoals?: string,
     public campaignDetails?: string,
+    public campaignDescription?: string,
     public startDate?: Date,
     public endDate?: Date,
     public polygonDraw?: string,
     public pointDraw?: string,
     public phenomena?: string
-  ) {  }
-
+  ) {}
 }

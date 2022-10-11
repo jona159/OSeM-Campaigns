@@ -1,48 +1,54 @@
 <div [hidden]="submitted">
-<form (ngSubmit)="onSubmit(createForm)" #createForm = "ngForm">
-  <div class="field">
-        <p class="control has-icons-left has-icons-right">
-          <input type="text"
+  <form (ngSubmit)="onSubmit(createForm)" #createForm="ngForm">
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input
+          type="text"
           class="input"
           id="title"
           required
           placeholder="Title"
           [(ngModel)]="model.title"
           name="title"
-          #title="ngModel">
-          <span class="icon is-small is-left">
-            <i class="fa fa-lock"></i>
-          </span>
-        </p>
-  </div>
-  <div
-      [hidden]="title.valid || title.pristine"
-      class="notification is-danger is-light">
-      Title is required!
-  </div>
-
-  <div class="field">
-    <p class="control is-expanded has-icons-left has-icons-right">
-      <input type="text"
-        class="input"
-        id="polygonDraw"
-      placeholder="polygonDraw are f..."
-      readonly
-      [(ngModel)]="model.polygonDraw"
-      name="polygonDraw"
-      #polygonDraw="ngModel">
+          #title="ngModel"
+        />
         <span class="icon is-small is-left">
-              <i class="fa fa-lock"></i>
+          <i class="fa fa-lock"></i>
         </span>
-    </p>
-  </div>
-  <div
-    [hidden]="polygonDraw.valid || polygonDraw.pristine"
-    class="notification is-danger is-light">
-    polygonDraw details are required!
-  </div>
+      </p>
+    </div>
+    <div
+      [hidden]="title.valid || title.pristine"
+      class="notification is-danger is-light"
+    >
+      Title is required!
+    </div>
 
-  <div class="field">
+    <div class="field">
+      <p class="control is-expanded has-icons-left has-icons-right">
+        <input
+          type="text"
+          class="input"
+          id="polygonDraw"
+          placeholder="polygonDraw are f..."
+          readonly
+          [(ngModel)]="model.polygonDraw"
+          name="polygonDraw"
+          #polygonDraw="ngModel"
+        />
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div
+      [hidden]="polygonDraw.valid || polygonDraw.pristine"
+      class="notification is-danger is-light"
+    >
+      polygonDraw details are required!
+    </div>
+
+    <!-- <div class="field">
     <p class="control is-expanded has-icons-left has-icons-right">
       <input type="text"
         class="input"
@@ -61,10 +67,9 @@
     [hidden]="pointDraw.valid || pointDraw.pristine"
     class="notification is-danger is-light">
     pointDraw details are required!
-  </div>
+  </div> -->
 
-
-  <div class="field">
+    <!-- <div class="field">
     <p class="control has-icons-left">
          <input type="text"
          class="input"
@@ -83,9 +88,9 @@
       [hidden]="name.valid || name.pristine"
       class="notification is-danger is-light">
       Name is required!
-  </div>
+  </div> -->
 
-  <div class="field">
+    <!-- <div class="field">
     <p class="control has-icons-left">
          <input type="text"
          class="input"
@@ -104,9 +109,9 @@
       [hidden]="aboutme.valid || aboutme.pristine"
       class="notification is-danger is-light">
       "About me" is required!
-  </div>
+  </div> -->
 
-  <div class="field">
+    <!-- <div class="field">
     <p class="control has-icons-left">
       <input type="text"
       class="input"
@@ -125,9 +130,9 @@
     [hidden]="campaignreasons.valid || campaignreasons.pristine"
     class="notification is-danger is-light">
     Campaign reasons are required!
-  </div>
+  </div> -->
 
-  <div class="field">
+    <!-- <div class="field">
     <p class="control has-icons-left">
       <input type="text"
       class="input"
@@ -146,10 +151,9 @@
     [hidden]="campaigngoals.valid || campaigngoals.pristine"
     class="notification is-danger is-light">
     Campaign goals are required!
-  </div>
+  </div> -->
 
-
-  <div class="field">
+    <!-- <div class="field">
     <p class="control has-icons-left">
       <input type="text"
       class="input"
@@ -168,42 +172,70 @@
     [hidden]="campaigndetails.valid || campaigndetails.pristine"
     class="notification is-danger is-light">
     Campaign details are required!
-  </div>
+  </div> -->
 
-  <p>Choose the start date of the campain</p>
     <div class="field">
-        <p class="control has-icons-left">
-            <input type="date"
-            class="input"
-            id="startdate"
-            required
-            placeholder="Start Date"
-            [(ngModel)]="model.startDate"
-            name="startdate">
-            <span class="icon is-small is-left">
-                <i class="fa fa-lock"></i>
-            </span>
-        </p>
+      <p class="control has-icons-left">
+        <input
+          type="text"
+          class="input"
+          id="campaigndescription"
+          required
+          placeholder="Description"
+          [(ngModel)]="model.campaignDescription"
+          name="campaigndescription"
+          #campaigndescription="ngModel"
+        />
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div
+      [hidden]="campaigndescription.valid || campaigndescription.pristine"
+      class="notification is-danger is-light"
+    >
+      Description is required!
+    </div>
+
+    <p>Choose the start date of the campain</p>
+    <div class="field">
+      <p class="control has-icons-left">
+        <input
+          type="date"
+          class="input"
+          id="startdate"
+          required
+          placeholder="Start Date"
+          [(ngModel)]="model.startDate"
+          name="startdate"
+        />
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </p>
     </div>
 
     <p *ngIf="model.startDate">Choose the end date of the campain</p>
     <div *ngIf="model.startDate" class="field">
       <p class="control has-icons-left">
-          <input type="date"
-          min="{{model.startDate}}"
+        <input
+          type="date"
+          min="{{ model.startDate }}"
           class="input"
           id="enddate"
           required
           placeholder="End Date"
           [(ngModel)]="model.endDate"
-          name="enddate">
-          <span class="icon is-small is-left">
-              <i class="fa fa-lock"></i>
-          </span>
+          name="enddate"
+        />
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
       </p>
-  </div>
+    </div>
 
-   <!-- <div class="select is-multiple">
+    <!-- <div class="select is-multiple">
       <label for="power">Phenomena</label>
       <select multiple
               size="10"
@@ -217,7 +249,7 @@
       </select>
     </div>   -->
 
-    <div class="select is-multiple">
+    <!-- <div class="select is-multiple">
       <label for="power">Phenomena</label>
       <select multiple
               size="10"
@@ -229,7 +261,7 @@
                 [value]="one.phenomenonLabel[0].value">{{one.phenomenonLabel[0].value}}
               </option>
       </select>
-    </div> 
+    </div>  -->
     <!-- <div class="field">
             <label for="power">Phenomena</label>
             <input
@@ -242,64 +274,65 @@
     </div> -->
     <div>
       <button
-            type="submit"
-            class="button is-dark"
-            [disabled]="createForm.invalid">
-            Create
-          </button>
+        type="submit"
+        class="button is-dark"
+        [disabled]="createForm.invalid"
+      >
+        Create
+      </button>
     </div>
   </form>
-  </div>
+</div>
 
-  <div [hidden]="!submitted">
-    <h2>You submitted the following:</h2>
-    <div class="box">
-      <div class="col-xs-3">Title of campaign</div>
-      <div class="col-xs-9">{{ model.title }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Polygon</div>
-      <div class="col-xs-9">{{ model.polygonDraw }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Point</div>
-      <div class="col-xs-9">{{ model.pointDraw }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">About me</div>
-      <div class="col-xs-9">{{ model.aboutMe }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Name and surname</div>
-      <div class="col-xs-9">{{ model.name }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Campaign reasons</div>
-      <div class="col-xs-9">{{ model.campaignReasons }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Campaign goals</div>
-      <div class="col-xs-9">{{ model.campaignGoals }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Campaign details</div>
-      <div class="col-xs-9">{{ model.campaignDetails }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Start date</div>
-      <div class="col-xs-9">{{ model.startDate }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">End date</div>
-      <div class="col-xs-9">{{ model.endDate }}</div>
-    </div>
-    <div class="box">
-      <div class="col-xs-3">Selected phenomena</div>
-      <div class="col-xs-9">{{ model.phenomena }}</div>
-    </div>
+<div [hidden]="!submitted">
+  <h2>You submitted the following:</h2>
+  <div class="box">
+    <div class="col-xs-3">Title of campaign</div>
+    <div class="col-xs-9">{{ model.title }}</div>
   </div>
+  <div class="box">
+    <div class="col-xs-3">Polygon</div>
+    <div class="col-xs-9">{{ model.polygonDraw }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">Point</div>
+    <div class="col-xs-9">{{ model.pointDraw }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">About me</div>
+    <div class="col-xs-9">{{ model.aboutMe }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">Name and surname</div>
+    <div class="col-xs-9">{{ model.name }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">Campaign reasons</div>
+    <div class="col-xs-9">{{ model.campaignReasons }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">Campaign goals</div>
+    <div class="col-xs-9">{{ model.campaignGoals }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">Campaign details</div>
+    <div class="col-xs-9">{{ model.campaignDetails }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">Start date</div>
+    <div class="col-xs-9">{{ model.startDate }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">End date</div>
+    <div class="col-xs-9">{{ model.endDate }}</div>
+  </div>
+  <div class="box">
+    <div class="col-xs-3">Selected phenomena</div>
+    <div class="col-xs-9">{{ model.phenomena }}</div>
+  </div>
+</div>
 
-  <!-- <div *ngFor="let campaign of allCampaigns$ | async">
+<!-- <div *ngFor="let campaign of allCampaigns$ | async">
 
 
     campaign{{campaign.title}}
