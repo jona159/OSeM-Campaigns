@@ -161,44 +161,46 @@ export class MapService {
       );
     });
 
-    //PLOTTING polygons
-    this.map.on("load", () => {
-      // Add a data source containing GeoJSON data.
-      this.map.addSource("CampPoly", {
-        type: "geojson",
-        data: {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            // These coordinates outline CampPoly.
-            coordinates: this.Campaign_coord,
+    if (this.Campaign_coord) {
+      //PLOTTING polygons
+      this.map.on("load", () => {
+        // Add a data source containing GeoJSON data.
+        this.map.addSource("CampPoly", {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            geometry: {
+              type: "Polygon",
+              // These coordinates outline CampPoly.
+              coordinates: this.Campaign_coord,
+            },
           },
-        },
-      });
+        });
 
-      // Add a new layer to visualize the polygon.
-      this.map.addLayer({
-        id: "CampPoly",
-        type: "fill",
-        source: "CampPoly", // reference the data source
-        layout: {},
-        paint: {
-          "fill-color": "#0080ff", // blue color fill
-          "fill-opacity": 0.5,
-        },
+        // Add a new layer to visualize the polygon.
+        this.map.addLayer({
+          id: "CampPoly",
+          type: "fill",
+          source: "CampPoly", // reference the data source
+          layout: {},
+          paint: {
+            "fill-color": "#0080ff", // blue color fill
+            "fill-opacity": 0.5,
+          },
+        });
+        // Add a black outline around the polygon.
+        this.map.addLayer({
+          id: "outline",
+          type: "line",
+          source: "CampPoly",
+          layout: {},
+          paint: {
+            "line-color": "#000",
+            "line-width": 3,
+          },
+        });
       });
-      // Add a black outline around the polygon.
-      this.map.addLayer({
-        id: "outline",
-        type: "line",
-        source: "CampPoly",
-        layout: {},
-        paint: {
-          "line-color": "#000",
-          "line-width": 3,
-        },
-      });
-    });
+    }
   }
 
   DrawControlMap() {

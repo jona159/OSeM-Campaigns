@@ -1,126 +1,147 @@
-<section class="section" *ngFor="let campaign of allCampaigns$ | async; let i = index;">
+<div class="osem-create-campaign">
+  <a
+    style="padding: 6px; margin-left: auto"
+    [routerLink]="['../create']"
+    queryParamsHandling="merge"
+    >{{ "CREATE NEW" | translate }}
+    <i class="fa fa-duotone fa-plus"></i>
+  </a>
+</div>
+
+<section
+  class="section"
+  *ngFor="let campaign of allCampaigns$ | async; let i = index"
+>
   <div class="item-container">
-  <div class="img-container">
-      <img src="https://i.stack.imgur.com/WpMdM.png" alt="Location map">
+    <div class="img-container">
+      <img src="https://i.stack.imgur.com/WpMdM.png" alt="Location map" />
       <div class="course-details">
-          <p class="date">
-              Starting {{ campaign.startDate }}
-          </p>
-          <p class="date">
-              Ending {{ campaign.endDate }}
-          </p>
+        <!-- <p class="date">Starting {{ campaign.startDate }}</p>
+        <p class="date">Ending {{ campaign.endDate }}</p> -->
+        <p>{{ calculateCampaignTimeLeft(campaign.endDate) }}</p>
       </div>
-  </div>
-  <div class="separator"></div>
-  <div class="course-info">
+    </div>
+    <div
+      class="priority-container"
+      [ngClass]="{
+        urgent: campaign.priority === 'Urgent',
+        high: campaign.priority === 'High',
+        medium: campaign.priority === 'Medium',
+        low: campaign.priority === 'Low'
+      }"
+    >
+      <i class="fa fa-thin fa-clock"></i>
+      <p>{{ campaign.priority }}</p>
+    </div>
+    <div class="separator"></div>
+    <div class="course-info">
       <p class="title">{{ campaign.title }}</p>
-      <p class="sub-title">Id is {{ campaign._id}}</p>
-      <div class="title-separator"></div>
-      <div>
-        <button class="modify_button" (click)="deleteCampaign(campaign._id)">Delete</button>
-        <button class="modify_button" [ngClass]="{'active': view_update === 'ac_'+i}"
-        (click)="showUpdateForm(campaign);changeUpdate('ac_'+i);clickToZoom(campaign.polygonDraw)">Update</button>
-        <button class="modify_button" (click)="joinCampaign(campaign)">Join</button>
-
-
-
+      <!-- <p class="sub-title">Id is {{ campaign._id }}</p> -->
+      <div class="progress-container">
+        <progress class="progress is-small is-primary" value="15" max="100">
+          15%
+        </progress>
+        <p>Mitwirkende</p>
       </div>
-      <div class="icon"  [ngClass]="{'active': view_ac === 'ac_'+i}" (click)="changeAccordion('ac_'+i);showUpdateForm(campaign);clickToZoom(campaign.polygonDraw)">
+      <div>
+        <button class="modify_button" (click)="deleteCampaign(campaign._id)">
+          Delete
+        </button>
+        <button
+          class="modify_button"
+          [ngClass]="{ active: view_update === 'ac_' + i }"
+          (click)="
+            showUpdateForm(campaign);
+            changeUpdate('ac_' + i);
+            clickToZoom(campaign.polygonDraw)
+          "
+        >
+          Update
+        </button>
+        <button class="modify_button" (click)="joinCampaign(campaign)">
+          Join
+        </button>
+      </div>
+      <div
+        class="icon"
+        [ngClass]="{ active: view_ac === 'ac_' + i }"
+        (click)="
+          changeAccordion('ac_' + i);
+          showUpdateForm(campaign);
+          clickToZoom(campaign.polygonDraw)
+        "
+      >
         <i class="fas fa-arrow-circle-up"></i>
       </div>
+    </div>
   </div>
-</div>
-  <div class="content-container" [ngClass]="{'active': view_ac === 'ac_'+i}" *ngIf="view_ac === 'ac_'+i" >
+  <div
+    class="content-container"
+    [ngClass]="{ active: view_ac === 'ac_' + i }"
+    *ngIf="view_ac === 'ac_' + i"
+  >
     <form (ngSubmit)="updateCampaign(updateForm)" #updateForm="ngForm">
-       <div>
-        <label for="title">Campaign Title</label><br>
+      <div>
+        <label for="title">Campaign Title</label><br />
         <input
-          type = "text"
+          type="text"
           id="title"
           name="title"
-          class ="input is-small"
+          class="input is-small"
           required
-          [disabled] = "view_update !== 'ac_'+i"
+          [disabled]="view_update !== 'ac_' + i"
           [(ngModel)]="campaignToBeUpdated.title"
-          style = "width:400px"/>
-       </div>
-       <div>
-        <label for="polygonDraw">Campaign Polygon</label><br>
+          style="width: 400px"
+        />
+      </div>
+      <div>
+        <label for="polygonDraw">Campaign Polygon</label><br />
         <input
-          type = "text"
+          type="text"
           id="polygonDraw"
           name="polygonDraw"
-          class ="input is-small"
+          class="input is-small"
           required
-          [disabled] = "view_update !== 'ac_'+i"
+          [disabled]="view_update !== 'ac_' + i"
           [(ngModel)]="campaignToBeUpdated.polygonDraw"
-          style = "width:400px"/>
-       </div>
-       <div>
-        <label for="aboutMe">Campaign AboutMe</label><br>
-        <input
-          type = "text"
-          id="aboutMe"
-          name="aboutMe"
-          class ="input is-small"
-          required
-          [disabled] = "view_update !== 'ac_'+i"
-          [(ngModel)]="campaignToBeUpdated.aboutMe"
-          style = "width:400px"/>
+          style="width: 400px"
+        />
       </div>
       <div class="form-group">
-        <label for="campaignGoals">Campaign Goals</label><br>
+        <label for="startDate"
+          >Campaign StartDate {{ campaignToBeUpdated.startDate }}</label
+        ><br />
         <input
-          type = "text"
-          id="campaignGoals"
-          name="campaignGoals"
-          class ="input is-small"
-          required
-          [disabled] = "view_update !== 'ac_'+i"
-          [(ngModel)]="campaignToBeUpdated.campaignGoals"
-          style = "width:400px"/>
-      </div>
-      <div class="form-group">
-        <label for="details">Campaign Details</label><br>
-        <input
-          type = "text"
-          id="campaignDetails"
-          name="campaignDetails"
-          class ="input is-small"
-          required
-          [disabled] = "view_update !== 'ac_'+i"
-          [(ngModel)]="campaignToBeUpdated.campaignDetails"
-          style = "width:400px"/>
-      </div>
-      <div class="form-group">
-        <label for="startDate">Campaign StartDate {{campaignToBeUpdated.startDate}}</label><br>
-        <input
-          type = "date"
+          type="date"
           id="startDate"
           name="startDate"
-          class ="input is-small"
+          class="input is-small"
           required
-          [disabled] = "view_update !== 'ac_'+i"
+          [disabled]="view_update !== 'ac_' + i"
           (ngModelChange)="formatStartdate($event)"
           [ngModel]="campaignToBeUpdated.startDate"
-          style = "width:400px"/>
+          style="width: 400px"
+        />
       </div>
       <div class="form-group">
-        <label for="endDate">Campaign Enddate {{campaignToBeUpdated.endDate}}</label><br>
+        <label for="endDate"
+          >Campaign Enddate {{ campaignToBeUpdated.endDate }}</label
+        ><br />
         <input
-          type = "date"
+          type="date"
           id="endDate"
           name="endDate"
-          min="{{campaignToBeUpdated.startDate}}"
-          class ="input is-small"
+          min="{{ campaignToBeUpdated.startDate }}"
+          class="input is-small"
           required
-          [disabled] = "view_update !== 'ac_'+i"
+          [disabled]="view_update !== 'ac_' + i"
           (ngModelChange)="formatEnddate($event)"
           [ngModel]="campaignToBeUpdated.endDate"
-          style = "width:400px"/>
+          style="width: 400px"
+        />
       </div>
       <div class="select is-multiple">
-        <label for="phenomena">Campaign Phenomena</label><br>
+        <label for="phenomena">Campaign Phenomena</label><br />
         <select
           multiple
           size="10"
@@ -128,16 +149,25 @@
           name="phenomena"
           class="input is-small"
           required
-          [disabled] = "view_update !== 'ac_'+i"
-          [(ngModel)]="campaignToBeUpdated.phenomena">
-        <option *ngFor="let one of phenomena | async"
-                [value]="one.phenomenonLabel[0].value">{{one.phenomenonLabel[0].value}}
-        </option>
-      </select>
+          [disabled]="view_update !== 'ac_' + i"
+          [(ngModel)]="campaignToBeUpdated.phenomena"
+        >
+          <option
+            *ngFor="let one of phenomena | async"
+            [value]="one.phenomenonLabel[0].value"
+          >
+            {{ one.phenomenonLabel[0].value }}
+          </option>
+        </select>
       </div>
-      <br>
-       <button class="modify_button" [disabled]="updateForm.invalid || view_update !== 'ac_'+i " type="submit"
-       >Save</button>
-  </form>
+      <br />
+      <button
+        class="modify_button"
+        [disabled]="updateForm.invalid || view_update !== 'ac_' + i"
+        type="submit"
+      >
+        Save
+      </button>
+    </form>
   </div>
 </section>

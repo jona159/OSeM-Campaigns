@@ -1,12 +1,9 @@
 export class FormDesign {
   constructor(
     public title?: string,
-    public name?: string,
-    public aboutMe?: string,
-    public campaignReasons?: string,
-    public campaignGoals?: string,
-    public campaignDetails?: string,
-    public campaignDescription?: string,
+    // public name?: string,
+    public description?: string,
+    public priority?: string,
     public startDate?: Date,
     public endDate?: Date,
     public polygonDraw?: string,

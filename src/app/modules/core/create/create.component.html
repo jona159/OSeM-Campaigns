@@ -49,25 +49,46 @@
     </div>
 
     <!-- <div class="field">
-    <p class="control is-expanded has-icons-left has-icons-right">
-      <input type="text"
-        class="input"
-        id="pointDraw"
-      placeholder="pointDraw are f..."
-      readonly
-      [(ngModel)]="model.pointDraw"
-      name="pointDraw"
-      #pointDraw="ngModel">
+      <p class="control has-icons-left">
+        <input
+          type="text"
+          class="input"
+          id="description"
+          required
+          placeholder="Please describe your campaign"
+          [(ngModel)]="model.description"
+          name="description"
+          #aboutme="ngModel"
+        />
         <span class="icon is-small is-left">
-              <i class="fa fa-lock"></i>
+          <i class="fa fa-lock"></i>
         </span>
-    </p>
-  </div>
-  <div
-    [hidden]="pointDraw.valid || pointDraw.pristine"
-    class="notification is-danger is-light">
-    pointDraw details are required!
-  </div> -->
+      </p>
+    </div> -->
+
+    <!-- <div class="field">
+      <p class="control is-expanded has-icons-left has-icons-right">
+        <input
+          type="text"
+          class="input"
+          id="pointDraw"
+          placeholder="pointDraw are f..."
+          readonly
+          [(ngModel)]="model.pointDraw"
+          name="pointDraw"
+          #pointDraw="ngModel"
+        />
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div
+      [hidden]="pointDraw.valid || pointDraw.pristine"
+      class="notification is-danger is-light"
+    >
+      pointDraw details are required!
+    </div> -->
 
     <!-- <div class="field">
     <p class="control has-icons-left">
@@ -179,12 +200,12 @@
         <input
           type="text"
           class="input"
-          id="campaigndescription"
+          id="description"
           required
           placeholder="Description"
-          [(ngModel)]="model.campaignDescription"
-          name="campaigndescription"
-          #campaigndescription="ngModel"
+          [(ngModel)]="model.description"
+          name="description"
+          #description="ngModel"
         />
         <span class="icon is-small is-left">
           <i class="fa fa-lock"></i>
@@ -192,10 +213,28 @@
       </p>
     </div>
     <div
-      [hidden]="campaigndescription.valid || campaigndescription.pristine"
+      [hidden]="description.valid || description.pristine"
       class="notification is-danger is-light"
     >
       Description is required!
+    </div>
+
+    <div class="select is-multiple">
+      <label for="priority">Priority</label>
+      <select
+        multiple
+        size="4"
+        id="priority"
+        required
+        [(ngModel)]="model.priority"
+        name="priority"
+        #priority="ngModel"
+      >
+        <option value="Urgent">Urgent</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
     </div>
 
     <p>Choose the start date of the campain</p>
@@ -262,16 +301,17 @@
               </option>
       </select>
     </div>  -->
-    <!-- <div class="field">
-            <label for="power">Phenomena</label>
-            <input
-                    id="power"
-                    type="text"
-                    value="PM10"
-                    required
-                    [(ngModel)]="model.phenomena"
-                    name="phenomena">
-    </div> -->
+    <div class="field">
+      <label for="power">Phenomena</label>
+      <input
+        id="power"
+        type="text"
+        value="PM10"
+        required
+        [(ngModel)]="model.phenomena"
+        name="phenomena"
+      />
+    </div>
     <div>
       <button
         type="submit"
@@ -295,6 +335,10 @@
     <div class="col-xs-9">{{ model.polygonDraw }}</div>
   </div>
   <div class="box">
+    <div class="col-xs-3">Description</div>
+    <div class="col-xs-9">{{ model.description }}</div>
+  </div>
+  <!-- <div class="box">
     <div class="col-xs-3">Point</div>
     <div class="col-xs-9">{{ model.pointDraw }}</div>
   </div>
@@ -317,7 +361,7 @@
   <div class="box">
     <div class="col-xs-3">Campaign details</div>
     <div class="col-xs-9">{{ model.campaignDetails }}</div>
-  </div>
+  </div> -->
   <div class="box">
     <div class="col-xs-3">Start date</div>
     <div class="col-xs-9">{{ model.startDate }}</div>
