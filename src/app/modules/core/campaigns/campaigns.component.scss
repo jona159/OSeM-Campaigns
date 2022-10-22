@@ -153,12 +153,10 @@ progress {
 
 .course-details p {
   color: #fff;
-  font-size: 0.4em;
-  font-weight: bolder;
-  letter-spacing: 1px;
+  font-size: medium;
+  font-weight: bold;
   position: relative;
   padding-left: 1px;
-  margin-bottom: 16px;
 }
 
 .course-details p i {
@@ -281,3 +279,33 @@ progress {
 .modify_button.active {
   background-color: #a5d6a7;
 }
+
+.searchbar {
+  width: 200px;
+}
+
+.osem-create-campaign {
+  padding-bottom: 1rem;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.osem-create-campaign button {
+  background: var(--color-primary-light);
+  float: right;
+  padding: 0.2rem;
+
+  &:hover {
+    a {
+      color: white;
+    }
+  }
+}
+
+// .osem-create-campaign a:hover {
+//   color: white;
+// }

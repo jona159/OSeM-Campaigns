@@ -15,6 +15,8 @@ import { UiService } from "src/app/models/ui/state/ui.service";
 import { ThreadService } from "src/app/models/threads/threads.service";
 import { ThreadStore } from "src/app/models/threads/threads.store";
 import { CursorError } from "@angular/compiler/src/ml_parser/lexer";
+import { filter, map } from "rxjs/operators";
+import { pipe } from "rxjs";
 
 @Component({
   selector: "osem-campaigns",
@@ -26,6 +28,12 @@ export class CampaignsComponent implements OnInit {
 
   currentUser: any;
 
+  searchstring: string;
+
+  prio: string;
+
+  timeleft: string;
+
   slackToken =
     "xoxp-2966864970930-2969169630004-3008901576819-0b8e12f0c75789fc94ae67cba7707c2f";
 
@@ -33,6 +41,8 @@ export class CampaignsComponent implements OnInit {
     "https://discord.com/api/webhooks/932937133918937130/kmiGdfNRbD8MluFz2eLHJwyFmTmtODuPxqImAxC34DyOlJ1Z8OC1vA7rHAypexC-xeTr";
 
   allCampaigns$ = this.campaignQuery.selectAll();
+
+  searchedCampaigns$ = this.allCampaigns$;
 
   currentDate = this.datePipe.transform(new Date(), "dd-MM-yy");
 
@@ -96,10 +106,13 @@ export class CampaignsComponent implements OnInit {
     this.mapService.zoomMe(coordinates);
   }
 
-  calculateCampaignTimeLeft(event: Date) {
-    // const endDate = this.datePipe.transform(event, "dd-MM-yy")
+  calcDiffDays(event: Date) {
     var diff = Math.abs(new Date(event).getTime() - new Date().getTime());
-    var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    return Math.ceil(diff / (1000 * 3600 * 24));
+  }
+
+  calculateCampaignTimeLeft(event: Date) {
+    var diffDays = this.calcDiffDays(event);
     if (diffDays < 14) {
       return `Noch ${diffDays} Tage übrig`;
     } else if (diffDays > 14 && diffDays < 30) {
@@ -119,6 +132,39 @@ export class CampaignsComponent implements OnInit {
 
   formatEnddate(event) {
     this.campaignToBeUpdated.endDate = new Date(event);
+  }
+
+  search(event) {
+    this.searchedCampaigns$ = this.allCampaigns$.pipe(
+      map((campaigns: Campaign[]) =>
+        campaigns
+          .map((campaign) => campaign)
+          .filter((c) => c.title.includes(event))
+      )
+    );
+  }
+
+  priorityfilter(event) {
+    this.searchedCampaigns$ = this.allCampaigns$.pipe(
+      map((campaigns: Campaign[]) =>
+        campaigns
+          .map((campaign) => campaign)
+          .filter((c) => c.priority === event)
+      )
+    );
+  }
+
+  timeleftfilter(event) {
+    let days = parseInt(event);
+    if (days === 14) {
+      this.searchedCampaigns$ = this.allCampaigns$.pipe(
+        map((campaigns: Campaign[]) =>
+          campaigns
+            .map((campaign) => campaign)
+            .filter((c) => this.calcDiffDays(c.endDate) < 14)
+        )
+      );
+    }
   }
 
   // postThread(){

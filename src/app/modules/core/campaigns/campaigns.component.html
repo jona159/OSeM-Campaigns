@@ -1,16 +1,82 @@
 <div class="osem-create-campaign">
-  <a
-    style="padding: 6px; margin-left: auto"
-    [routerLink]="['../create']"
-    queryParamsHandling="merge"
-    >{{ "CREATE NEW" | translate }}
-    <i class="fa fa-duotone fa-plus"></i>
-  </a>
+  <button>
+    <a [routerLink]="['../create']" queryParamsHandling="merge"
+      >{{ "CREATE NEW" | translate }}
+      <i class="fa fa-duotone fa-plus"></i>
+    </a>
+  </button>
+</div>
+
+<div class="select" style="float: left">
+  <select
+    id="priority-filter"
+    name="priority-filter"
+    class="input is-small"
+    [(ngModel)]="prio"
+  >
+    <option disabled selected value>Filter nach Priorität</option>
+    <option value="Urgent">Urgent</option>
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </select>
+  <label for="timeleft-filter">Laufzeit der Kampagne</label>
+  <select
+    id="timeleft-filter"
+    name="timeleft-filter"
+    class="input is-small"
+    [(ngModel)]="timeleft"
+  >
+    <option disabled selected value>Alle</option>
+    <option value="14">Noch 14 Tage oder weniger</option>
+    <option value="30">2 Wochen bis 1 Monat</option>
+    <option value="90">1-3 Monate</option>
+    <option value="365">3 Monate bis 1 Jahr</option>
+    <option value="1000">1 Jahr oder mehr</option>
+  </select>
+  <!-- <select
+    id="phenomena-filter"
+    name="phenomena-filter"
+    class="input is-small"
+    [(ngModel)]="pheno"
+  >
+    <option hidden disabled selected value>Filter nach Phänomenen</option>
+    <option value="Urgent">Urgent</option>
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </select> -->
+</div>
+<button
+  class="modify-button"
+  style="margin-top: 0.25rem"
+  (click)="priorityfilter(prio); timeleftfilter(timeleft)"
+>
+  Filter
+</button>
+<div style="float: right">
+  <div style="text-align: right">
+    <input
+      type="text"
+      id="searchbar"
+      name="searchbar"
+      class="input is-small searchbar"
+      [(ngModel)]="searchstring"
+    />
+  </div>
+  <button
+    class="modify-button"
+    style="text-align: right; float: right; margin-top: 0.25rem"
+    (click)="search(searchstring)"
+  >
+    {{ "SEARCH FOR CAMPAIGNS" | translate }}
+  </button>
 </div>
 
 <section
   class="section"
-  *ngFor="let campaign of allCampaigns$ | async; let i = index"
+  style="margin-top: 15%"
+  *ngFor="let campaign of searchedCampaigns$ | async; let i = index"
 >
   <div class="item-container">
     <div class="img-container">
@@ -91,6 +157,7 @@
           required
           [disabled]="view_update !== 'ac_' + i"
           [(ngModel)]="campaignToBeUpdated.title"
+          (ngModelChange)="search($event)"
           style="width: 400px"
         />
       </div>

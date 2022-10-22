@@ -25,7 +25,6 @@ export class CampaignService {
     return this.http.get<any>(`${environment.api_url}/users/campaigns`).pipe(
       tap((entities) => {
         this.campaignStore.upsertMany(entities.data.stream);
-        console.log(entities.data.stream);
       })
     );
   }

@@ -219,11 +219,9 @@
       Description is required!
     </div>
 
-    <div class="select is-multiple">
+    <div class="select select-big">
       <label for="priority">Priority</label>
       <select
-        multiple
-        size="4"
         id="priority"
         required
         [(ngModel)]="model.priority"
@@ -237,8 +235,8 @@
       </select>
     </div>
 
-    <p>Choose the start date of the campain</p>
     <div class="field">
+      <p>Choose the start date of the campain</p>
       <p class="control has-icons-left">
         <input
           type="date"

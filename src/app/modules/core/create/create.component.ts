@@ -121,7 +121,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       // campaignGoals: submittedForm.value.campaigngoals,
       // campaignDetails: submittedForm.value.campaigndetails,
       description: submittedForm.value.description,
-      priority: submittedForm.value.priority[0],
+      priority: submittedForm.value.priority,
       startDate: startD,
       endDate: endD,
       phenomena: submittedForm.value.phenomena,
