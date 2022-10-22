@@ -285,13 +285,15 @@ progress {
 }
 
 .osem-create-campaign {
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-right: 0.5rem;
   margin: auto;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding-bottom: 2rem;
   margin-bottom: 1rem;
+  background-color: #e8e8e8;
 }
 
 .osem-create-campaign button {
@@ -306,6 +308,37 @@ progress {
   }
 }
 
-// .osem-create-campaign a:hover {
-//   color: white;
-// }
+.nested.dropdown {
+  &:hover > .dropdown-menu {
+    display: block;
+    background: white;
+  }
+  .dropdown-menu {
+    top: 20%;
+    margin-left: 100%;
+
+    label {
+      width: 180px;
+      clear: left;
+      text-align: left;
+      padding-right: 10px;
+    }
+
+    input,
+    label {
+      float: left;
+    }
+  }
+  .dropdown-trigger {
+    // button::after {
+    //   content: "⦠";
+    // }
+    button {
+      padding-right: 1em;
+      border: 0px;
+      font-size: medium;
+      font-weight: 400;
+      height: 2em;
+    }
+  }
+}
