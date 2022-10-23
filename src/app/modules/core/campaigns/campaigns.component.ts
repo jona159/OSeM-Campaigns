@@ -30,9 +30,27 @@ export class CampaignsComponent implements OnInit {
 
   searchstring: string;
 
-  prio: string;
+  // prio: string;
 
-  timeleft: string;
+  // timeleft: string;
+
+  filterObject = {
+    priority: {
+      prio_urgent: false,
+      prio_high: false,
+      prio_medium: false,
+      prio_low: false,
+    },
+    timeleft: {
+      timeleft_14: false,
+      timeleft_30: false,
+      timeleft_90: false,
+      timeleft_365: false,
+      timeleft_1000: false,
+    },
+    räumliche_Nähe: false,
+    phänomene: false,
+  };
 
   slackToken =
     "xoxp-2966864970930-2969169630004-3008901576819-0b8e12f0c75789fc94ae67cba7707c2f";
@@ -142,6 +160,10 @@ export class CampaignsComponent implements OnInit {
           .filter((c) => c.title.includes(event))
       )
     );
+  }
+
+  logFilterObject() {
+    console.log(this.filterObject);
   }
 
   priorityfilter(event) {

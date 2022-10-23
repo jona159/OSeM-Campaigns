@@ -85,7 +85,7 @@ progress {
 }
 
 .priority-container.low {
-  border: 1px solid green;
+  border: 2px solid green;
   color: green;
 }
 
@@ -218,7 +218,9 @@ progress {
   right: 0px;
   justify-content: center;
   align-items: center;
-  background: white;
+  // background: white;
+  margin-left: 1em;
+  padding: 0.5rem;
 }
 
 .fa-arrow-circle-up {
@@ -341,4 +343,26 @@ progress {
       height: 2em;
     }
   }
+}
+
+.filter-dropdown {
+  border: 2px solid black;
+  margin-left: 1em;
+  padding-left: 1em;
+  background-color: white;
+  font-size: 18px;
+
+  &:hover {
+    a {
+      font-weight: bold;
+      color: black;
+    }
+  }
+}
+
+.filtern-button {
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
+  background-color: gray;
 }

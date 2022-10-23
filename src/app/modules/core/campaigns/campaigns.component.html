@@ -1,216 +1,189 @@
-<div class="osem-create-campaign">
-  <button>
-    <a [routerLink]="['../create']" queryParamsHandling="merge"
-      >{{ "CREATE NEW" | translate }}
-      <i class="fa fa-duotone fa-plus"></i>
-    </a>
-  </button>
-</div>
-
-<div style="float: left">
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link"> Filter </a>
-
-        <div class="navbar-dropdown">
-          <div class="nested navbar-item dropdown">
-            <div class="dropdown-trigger">
-              <button
-                class="button"
-                aria-haspopup="true"
-                aria-controls="dropdown-menu"
-              >
-                <span>Priorität</span>
-                <span class="icon is-small" style="top: 10%">
-                  <i
-                    class="fas fa-sharp fa-solid- fa-angle-right"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                <div class="dropdown-item">
-                  <label for="priority_urgent">Urgent</label>
-                  <input
-                    type="checkbox"
-                    name="priority_urgent"
-                    id="priority_urgent"
-                    value="Urgent"
-                  />
+<div style="position: relative">
+  <div class="osem-create-campaign">
+    <button>
+      <a [routerLink]="['../create']" queryParamsHandling="merge"
+        >{{ "CREATE NEW" | translate }}
+        <i class="fa fa-duotone fa-plus"></i>
+      </a>
+    </button>
+    <div>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start filter-dropdown">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> Filter </a>
+            <div class="navbar-dropdown">
+              <div class="nested navbar-item dropdown">
+                <div class="dropdown-trigger">
+                  <button
+                    class="button"
+                    aria-haspopup="true"
+                    aria-controls="dropdown-menu"
+                  >
+                    <span>Priorität</span>
+                    <span class="icon is-small" style="top: 10%">
+                      <i
+                        class="fas fa-sharp fa-solid- fa-angle-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </button>
                 </div>
-                <div class="dropdown-item">
-                  <label for="priority_high">High</label>
-                  <input
-                    type="checkbox"
-                    name="priority_high"
-                    id="priority_high"
-                    value="High"
-                  />
-                </div>
-                <div class="dropdown-item">
-                  <label for="priority_medium">Medium</label>
-                  <input
-                    type="checkbox"
-                    name="priority_medium"
-                    id="priority_medium"
-                    value="Medium"
-                  />
-                </div>
-                <div class="dropdown-item">
-                  <label for="priority_low">Low</label>
-                  <input
-                    type="checkbox"
-                    name="priority_low"
-                    id="priority_low"
-                    value="Low"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="nested navbar-item dropdown">
-            <div class="dropdown-trigger">
-              <button
-                class="button"
-                aria-haspopup="true"
-                aria-controls="dropdown-menu"
-              >
-                <span>Zeit übrig</span>
-                <span class="icon is-small" style="top: 10%">
-                  <i
-                    class="fas fa-sharp fa-solid- fa-angle-right"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                <div class="dropdown-item">
-                  <input
-                    type="checkbox"
-                    name="timeleft_14"
-                    id="timeleft_14"
-                    value="14"
-                  />
-                  <label for="timeleft_14"> < 14 Tage </label>
-                </div>
-                <div class="dropdown-item">
-                  <input
-                    type="checkbox"
-                    name="timeleft_30"
-                    id="timeleft_30"
-                    value="30"
-                  />
-                  <label for="timeleft_30"> < 30 Tage </label>
-                </div>
-                <div class="dropdown-item">
-                  <input
-                    type="checkbox"
-                    name="timeleft_90"
-                    id="timeleft_90"
-                    value="90"
-                  />
-                  <label for="timeleft_90"> < 90 Tage</label>
-                </div>
-                <div class="dropdown-item">
-                  <input
-                    type="checkbox"
-                    name="timeleft_365"
-                    id="timeleft_365"
-                    value="365"
-                  />
-                  <label for="timeleft_365"> < 365 Tage</label>
-                </div>
-                <div class="dropdown-item">
-                  <input
-                    type="checkbox"
-                    name="timeleft_1000"
-                    id="timeleft_1000"
-                    value="1000"
-                  />
-                  <label for="timeleft_1000"> > 365 Tage</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="nested navbar-item dropdown">
-            <div class="dropdown-trigger">
-              <button
-                class="button"
-                aria-haspopup="true"
-                aria-controls="dropdown-menu"
-              >
-                <span>räumliche Nähe</span>
-                <span class="icon is-small" style="top: 10%">
-                  <i
-                    class="fas fa-sharp fa-solid- fa-angle-right"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </button>
-            </div>
-          </div>
-          <div class="nested navbar-item dropdown">
-            <div class="dropdown-trigger">
-              <button
-                class="button"
-                aria-haspopup="true"
-                aria-controls="dropdown-menu"
-              >
-                <span>Phänomene</span>
-                <span class="icon is-small" style="top: 10%">
-                  <i
-                    class="fas fa-sharp fa-solid- fa-angle-right"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                <a href="#" class="dropdown-item"> Dropdown item </a>
-                <a class="dropdown-item"> Other dropdown item </a>
-                <a href="#" class="dropdown-item is-active">
-                  Active dropdown item
-                </a>
-                <a href="#" class="dropdown-item"> Other dropdown item </a>
-                <hr class="dropdown-divider" />
-                <div class="nested dropdown dropdown-item">
-                  <div class="dropdown-trigger">
-                    <button
-                      class="button"
-                      aria-haspopup="true"
-                      aria-controls="dropdown-menu"
-                    >
-                      <span>Dropdown button</span>
-                      <span class="icon is-small">
-                        <i
-                          class="fas fa-sharp fa-solid- fa-angle-right"
-                          aria-hidden="true"
-                        ></i>
-                      </span>
-                    </button>
-                  </div>
-                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div class="dropdown-content">
-                      <a href="#" class="dropdown-item"> Dropdown item </a>
-                      <a class="dropdown-item"> Other dropdown item </a>
-                      <a href="#" class="dropdown-item is-active">
-                        Active dropdown item
-                      </a>
-                      <a href="#" class="dropdown-item">
-                        Other dropdown item
-                      </a>
-                      <hr class="dropdown-divider" />
-                      <a href="#" class="dropdown-item"> With a divider </a>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <div class="dropdown-item">
+                      <label for="priority_urgent">Urgent</label>
+                      <input
+                        type="checkbox"
+                        name="priority_urgent"
+                        id="priority_urgent"
+                        value="Urgent"
+                        [(ngModel)]="filterObject.priority.prio_urgent"
+                      />
+                    </div>
+                    <div class="dropdown-item">
+                      <label for="priority_high">High</label>
+                      <input
+                        type="checkbox"
+                        name="priority_high"
+                        id="priority_high"
+                        value="High"
+                        [(ngModel)]="filterObject.priority.prio_high"
+                      />
+                    </div>
+                    <div class="dropdown-item">
+                      <label for="priority_medium">Medium</label>
+                      <input
+                        type="checkbox"
+                        name="priority_medium"
+                        id="priority_medium"
+                        value="Medium"
+                        [(ngModel)]="filterObject.priority.prio_medium"
+                      />
+                    </div>
+                    <div class="dropdown-item">
+                      <label for="priority_low">Low</label>
+                      <input
+                        type="checkbox"
+                        name="priority_low"
+                        id="priority_low"
+                        value="Low"
+                        [(ngModel)]="filterObject.priority.prio_low"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="nested navbar-item dropdown">
+                <div class="dropdown-trigger">
+                  <button
+                    class="button"
+                    aria-haspopup="true"
+                    aria-controls="dropdown-menu"
+                  >
+                    <span>Zeit übrig</span>
+                    <span class="icon is-small" style="top: 10%">
+                      <i
+                        class="fas fa-sharp fa-solid- fa-angle-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <div class="dropdown-item">
+                      <label for="timeleft_14"> < 14 Tage </label>
+                      <input
+                        type="checkbox"
+                        name="timeleft_14"
+                        id="timeleft_14"
+                        value="14"
+                        [(ngModel)]="filterObject.timeleft.timeleft_14"
+                      />
+                    </div>
+                    <div class="dropdown-item">
+                      <label for="timeleft_30"> < 30 Tage </label>
+                      <input
+                        type="checkbox"
+                        name="timeleft_30"
+                        id="timeleft_30"
+                        value="30"
+                        [(ngModel)]="filterObject.timeleft.timeleft_30"
+                      />
+                    </div>
+                    <div class="dropdown-item">
+                      <label for="timeleft_90"> < 90 Tage</label>
+                      <input
+                        type="checkbox"
+                        name="timeleft_90"
+                        id="timeleft_90"
+                        value="90"
+                        [(ngModel)]="filterObject.timeleft.timeleft_90"
+                      />
+                    </div>
+                    <div class="dropdown-item">
+                      <label for="timeleft_365"> < 365 Tage</label>
+                      <input
+                        type="checkbox"
+                        name="timeleft_365"
+                        id="timeleft_365"
+                        value="365"
+                        [(ngModel)]="filterObject.timeleft.timeleft_365"
+                      />
+                    </div>
+                    <div class="dropdown-item">
+                      <label for="timeleft_1000"> > 365 Tage</label>
+                      <input
+                        type="checkbox"
+                        name="timeleft_1000"
+                        id="timeleft_1000"
+                        value="1000"
+                        [(ngModel)]="filterObject.timeleft.timeleft_1000"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="nested navbar-item dropdown">
+                <div class="dropdown-trigger">
+                  <button
+                    class="button"
+                    aria-haspopup="true"
+                    aria-controls="dropdown-menu"
+                  >
+                    <span>räumliche Nähe</span>
+                    <span class="icon is-small" style="top: 10%">
+                      <i
+                        class="fas fa-sharp fa-solid- fa-angle-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="nested navbar-item dropdown">
+                <div class="dropdown-trigger">
+                  <button
+                    class="button"
+                    aria-haspopup="true"
+                    aria-controls="dropdown-menu"
+                  >
+                    <span>Phänomene</span>
+                    <span class="icon is-small" style="top: 10%">
+                      <i
+                        class="fas fa-sharp fa-solid- fa-angle-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <button
+                class="modify-button filtern-button"
+                (click)="logFilterObject()"
+              >
+                Filtern
+              </button>
             </div>
           </div>
         </div>
@@ -218,7 +191,7 @@
     </div>
   </div>
 
-  <div class="select" style="float: left">
+  <!-- <div class="select" style="float: left">
     <select
       id="priority-filter"
       name="priority-filter"
@@ -245,7 +218,7 @@
       <option value="365">3 Monate bis 1 Jahr</option>
       <option value="1000">1 Jahr oder mehr</option>
     </select>
-    <!-- <select
+  <select
     id="phenomena-filter"
     name="phenomena-filter"
     class="input is-small"
@@ -257,14 +230,15 @@
     <option value="Medium">Medium</option>
     <option value="Low">Low</option>
   </select> -->
-  </div>
+  <!-- </div>
   <button
     class="modify-button"
     style="margin-top: 0.25rem"
     (click)="priorityfilter(prio); timeleftfilter(timeleft)"
   >
     Filter
-  </button>
+  </button> -->
+  <hr />
   <div style="float: right">
     <div style="text-align: right">
       <input
