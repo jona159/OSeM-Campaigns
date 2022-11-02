@@ -120,6 +120,10 @@ progress {
   font-weight: bold;
   letter-spacing: 1px;
   margin-bottom: 8px;
+  width: 8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sub-title {
@@ -365,4 +369,8 @@ progress {
   margin-top: 0.25rem;
   margin-right: 0.25rem;
   background-color: gray;
+}
+
+.navbar-dropdown span {
+  padding: 1em;
 }

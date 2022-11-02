@@ -9,6 +9,7 @@ export interface Campaign {
   // campaignDetails: string;
   description: string;
   priority: string;
+  location: string;
   startDate: Date;
   endDate: Date;
   polygonDraw: string;

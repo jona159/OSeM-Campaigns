@@ -37,7 +37,7 @@
                         name="priority_urgent"
                         id="priority_urgent"
                         value="Urgent"
-                        [(ngModel)]="filterObject.priority.prio_urgent"
+                        [(ngModel)]="filterObject.priority.Urgent"
                       />
                     </div>
                     <div class="dropdown-item">
@@ -47,7 +47,7 @@
                         name="priority_high"
                         id="priority_high"
                         value="High"
-                        [(ngModel)]="filterObject.priority.prio_high"
+                        [(ngModel)]="filterObject.priority.High"
                       />
                     </div>
                     <div class="dropdown-item">
@@ -57,7 +57,7 @@
                         name="priority_medium"
                         id="priority_medium"
                         value="Medium"
-                        [(ngModel)]="filterObject.priority.prio_medium"
+                        [(ngModel)]="filterObject.priority.Medium"
                       />
                     </div>
                     <div class="dropdown-item">
@@ -67,7 +67,7 @@
                         name="priority_low"
                         id="priority_low"
                         value="Low"
-                        [(ngModel)]="filterObject.priority.prio_low"
+                        [(ngModel)]="filterObject.priority.Low"
                       />
                     </div>
                   </div>
@@ -98,7 +98,7 @@
                         name="timeleft_14"
                         id="timeleft_14"
                         value="14"
-                        [(ngModel)]="filterObject.timeleft.timeleft_14"
+                        [(ngModel)]="filterObject.timeleft['14']"
                       />
                     </div>
                     <div class="dropdown-item">
@@ -108,7 +108,7 @@
                         name="timeleft_30"
                         id="timeleft_30"
                         value="30"
-                        [(ngModel)]="filterObject.timeleft.timeleft_30"
+                        [(ngModel)]="filterObject.timeleft['30']"
                       />
                     </div>
                     <div class="dropdown-item">
@@ -118,7 +118,7 @@
                         name="timeleft_90"
                         id="timeleft_90"
                         value="90"
-                        [(ngModel)]="filterObject.timeleft.timeleft_90"
+                        [(ngModel)]="filterObject.timeleft['90']"
                       />
                     </div>
                     <div class="dropdown-item">
@@ -128,7 +128,7 @@
                         name="timeleft_365"
                         id="timeleft_365"
                         value="365"
-                        [(ngModel)]="filterObject.timeleft.timeleft_365"
+                        [(ngModel)]="filterObject.timeleft['365']"
                       />
                     </div>
                     <div class="dropdown-item">
@@ -138,7 +138,7 @@
                         name="timeleft_1000"
                         id="timeleft_1000"
                         value="1000"
-                        [(ngModel)]="filterObject.timeleft.timeleft_1000"
+                        [(ngModel)]="filterObject.timeleft['1000']"
                       />
                     </div>
                   </div>
@@ -178,10 +178,7 @@
                   </button>
                 </div>
               </div>
-              <button
-                class="modify-button filtern-button"
-                (click)="logFilterObject()"
-              >
+              <button class="modify-button filtern-button" (click)="filter()">
                 Filtern
               </button>
             </div>
@@ -245,17 +242,19 @@
         type="text"
         id="searchbar"
         name="searchbar"
+        placeholder="{{ 'SEARCH FOR CAMPAINGS' | translate }}"
         class="input is-small searchbar"
         [(ngModel)]="searchstring"
+        (ngModelChange)="search(searchstring)"
       />
     </div>
-    <button
+    <!-- <button
       class="modify-button"
       style="text-align: right; float: right; margin-top: 0.25rem"
       (click)="search(searchstring)"
     >
       {{ "SEARCH FOR CAMPAIGNS" | translate }}
-    </button>
+    </button> -->
   </div>
 
   <section

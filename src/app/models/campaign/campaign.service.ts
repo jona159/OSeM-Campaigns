@@ -63,6 +63,7 @@ export class CampaignService {
     polygonDraw: number[],
     description: string,
     priority: string,
+    location: string,
     startDate: Date,
     endDate: Date,
     phenomena: string
@@ -73,6 +74,7 @@ export class CampaignService {
         polygonDraw,
         description,
         priority,
+        location,
         startDate,
         endDate,
         phenomena,

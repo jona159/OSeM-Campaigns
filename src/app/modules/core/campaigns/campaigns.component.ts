@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { CampaignQuery } from "src/app/models/campaign/campaign.query";
 import { CampaignService } from "src/app/models/campaign/campaign.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { Campaign } from "src/app/models/campaign/campaign.model";
 import { SubjectSubscriber } from "rxjs/internal/Subject";
 import { tap } from "rxjs/operators";
@@ -36,20 +36,20 @@ export class CampaignsComponent implements OnInit {
 
   filterObject = {
     priority: {
-      prio_urgent: false,
-      prio_high: false,
-      prio_medium: false,
-      prio_low: false,
+      Urgent: false,
+      High: false,
+      Medium: false,
+      Low: false,
     },
     timeleft: {
-      timeleft_14: false,
-      timeleft_30: false,
-      timeleft_90: false,
-      timeleft_365: false,
-      timeleft_1000: false,
+      "14": false,
+      "30": false,
+      "90": false,
+      "365": false,
+      "1000": false,
     },
     räumliche_Nähe: false,
-    phänomene: false,
+    phenomena: false,
   };
 
   slackToken =
@@ -162,103 +162,138 @@ export class CampaignsComponent implements OnInit {
     );
   }
 
-  logFilterObject() {
-    console.log(this.filterObject);
-  }
+  // logFilterObject() {
+  //   this.searchedCampaigns$ = this.filter();
+  // }
 
-  priorityfilter(event) {
-    this.searchedCampaigns$ = this.allCampaigns$.pipe(
-      map((campaigns: Campaign[]) =>
-        campaigns
-          .map((campaign) => campaign)
-          .filter((c) => c.priority === event)
-      )
+  filter() {
+    const true_priorities = Object.keys(this.filterObject.priority).filter(
+      (k) => this.filterObject.priority[k] === true
     );
-  }
 
-  timeleftfilter(event) {
-    let days = parseInt(event);
-    if (days === 14) {
-      this.searchedCampaigns$ = this.allCampaigns$.pipe(
-        map((campaigns: Campaign[]) =>
+    const true_timeleft = Object.keys(this.filterObject.timeleft).filter(
+      (k) => this.filterObject.timeleft[k] === true
+    );
+
+    const true_phenomena = Object.keys(this.filterObject.phenomena).filter(
+      (k) => this.filterObject.phenomena[k] === true
+    );
+
+    const check_timeleft_filter = (c: Campaign) => {
+      const filtered: Campaign[] = [];
+      true_timeleft.forEach((t) => {
+        const timeleft_val = parseInt(t);
+        console.log(timeleft_val);
+        if (timeleft_val === 14 && this.calcDiffDays(c.endDate) < 14) {
+          filtered.push(c);
+        }
+        if (
+          timeleft_val === 30 &&
+          this.calcDiffDays(c.endDate) < 30 &&
+          this.calcDiffDays(c.endDate) >= 14
+        ) {
+          filtered.push(c);
+        }
+      });
+      return null;
+    };
+
+    const filtered_campaigns = this.allCampaigns$.pipe(
+      map(
+        (campaigns: Campaign[]) =>
           campaigns
             .map((campaign) => campaign)
-            .filter((c) => this.calcDiffDays(c.endDate) < 14)
-        )
-      );
+            .filter((c) =>
+              true_priorities.length > 0
+                ? true_priorities.includes(c.priority)
+                : c
+            )
+        // .filter((c) => {
+        //   let diff: string | number = this.calcDiffDays(c.endDate);
+        //   if (diff < 14) {
+        //     diff = "14";
+        //   } else if (diff >= 14 && diff < 30) {
+        //     diff = "30";
+        //   } else if (diff <= 90 && diff > 30) {
+        //     diff = "90";
+        //   } else if (diff > 90 && diff <= 365) {
+        //     diff = "365";
+        //   } else if (diff > 365) {
+        //     diff = "1000";
+        //   }
+        //   true_timeleft.length > 0
+        //     ? true_timeleft.some((val) => {
+        //         val === diff;
+        //       })
+        //     : c;
+        // })
+      )
+    );
+
+    let filtered_campaigns_length = 0;
+
+    filtered_campaigns.subscribe(
+      (result) => (filtered_campaigns_length = result.length)
+    );
+    if (filtered_campaigns_length === 0) {
+      this.searchedCampaigns$ = this.allCampaigns$;
+    } else {
+      this.searchedCampaigns$ = filtered_campaigns;
     }
   }
 
-  // postThread(){
-  //   //this.threadService.createSlack().subscribe();
-  //   var xmlhttp = new XMLHttpRequest();
+  // createThread(campaign: Campaign) {
+  //   this.campaignToBeUpdated = { ...campaign };
+  //   console.log(this.campaignToBeUpdated._id);
+  //   console.log(this.campaignToBeUpdated.title);
+  //   this.threadFormActivated = true;
+  //   let date = new Date();
+  //   console.log(date);
+  //   let title = this.campaignToBeUpdated.title + " thread";
+  //   console.log(title);
+  //   const msg = { content: title };
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open("POST", this.whurl, true);
+  //   xhr.setRequestHeader("Content-Type", "application/json");
+  //   xhr.send(JSON.stringify(msg));
 
-  //   xmlhttp.open('POST', `https://slack.com/api/conversations.create?name=jstest&is_private=false&pretty=1`);
-  //   //xmlhttp.setRequestHeader('Content-type', 'application/json');
-  //   //xmlhttp.setRequestHeader('Authorization', 'Bearer ' + this.slackToken);
-  //   xmlhttp.send("token=xoxp-2966864970930-2969169630004-3008901576819-0b8e12f0c75789fc94ae67cba7707c2f");
+  // this.threadService.createThread(title, date, this.campaignToBeUpdated._id).subscribe(result => {
+  //   this.threadStore.update(state => {
+  //     console.log(state);
 
+  //     return {
+  //       threads :
+
+  //         result
+
+  //     };
+  //   });
+
+  //}
+  //)
   // }
 
-  createThread(campaign: Campaign) {
-    this.campaignToBeUpdated = { ...campaign };
-    console.log(this.campaignToBeUpdated._id);
-    console.log(this.campaignToBeUpdated.title);
-    this.threadFormActivated = true;
-    let date = new Date();
-    console.log(date);
-    let title = this.campaignToBeUpdated.title + " thread";
-    console.log(title);
-    const msg = { content: title };
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", this.whurl, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(msg));
-
-    // this.threadService.createThread(title, date, this.campaignToBeUpdated._id).subscribe(result => {
-    //   this.threadStore.update(state => {
-    //     console.log(state);
-
-    //     return {
-    //       threads :
-
-    //         result
-
-    //     };
-    //   });
-
-    //}
-    //)
-  }
-
-  addParticipant(event) {
-    console.log(event);
-    this.sessionQuery.user$.subscribe(
-      (result) => (this.currentUser = result.name)
-    );
-    this.campaignToBeUpdated.participants.push(this.currentUser);
-    console.log(this.campaignToBeUpdated);
-  }
+  // addParticipant(event) {
+  //   this.sessionQuery.user$.subscribe(
+  //     (result) => (this.currentUser = result.name)
+  //   );
+  //   this.campaignToBeUpdated.participants.push(this.currentUser);
+  // }
 
   showUpdateForm(campaign: Campaign) {
     this.campaignToBeUpdated = { ...campaign };
     this.isUpdateActivated = true;
-    console.log(campaign);
-    console.log(this.campaignToBeUpdated);
   }
 
   joinCampaign(campaign: Campaign) {
     this.campaignToBeUpdated = { ...campaign };
-    console.log(this.campaignToBeUpdated);
     this.sessionQuery.user$.subscribe(
       (result) => (this.currentUser = result.name)
     );
 
     //alert('Follow this link to join the discussion on Slack: https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
 
-    console.log(this.currentUser);
     this.campaignToBeUpdated.participants = this.currentUser;
-    console.log(this.campaignToBeUpdated);
     this.updateCampaignSub = this.campaignservice
       .updateCampaign(this.campaignToBeUpdated._id, this.campaignToBeUpdated)
       .subscribe((result) => console.log(result));
@@ -274,7 +309,6 @@ export class CampaignsComponent implements OnInit {
     // sd = new Date(sd);
     // console.log(sd);
     //console.log(updateForm);
-    console.log(updateForm.value);
     this.updateCampaignSub = this.campaignservice
       .updateCampaign(this.campaignToBeUpdated._id, updateForm.value)
       .subscribe(
