@@ -8,6 +8,7 @@ import { state } from "@angular/animations";
 
 // Should contain all variables to describe the state of the ui
 export interface UiState {
+  deleteCampaignModal: boolean;
   colors: ColorHelper;
   activeSensorTypes: any[];
   selectedPheno: any;
@@ -161,6 +162,7 @@ export function createInitialState(): UiState {
     selectedPolygon: [],
     selectedPoint: [],
     drawmode: false,
+    deleteCampaignModal: false,
   };
 }
 

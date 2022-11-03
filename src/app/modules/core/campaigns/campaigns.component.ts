@@ -157,7 +157,7 @@ export class CampaignsComponent implements OnInit {
       map((campaigns: Campaign[]) =>
         campaigns
           .map((campaign) => campaign)
-          .filter((c) => c.title.includes(event))
+          .filter((c) => c.title.includes(event) || c.location.includes(event))
       )
     );
   }
@@ -322,6 +322,7 @@ export class CampaignsComponent implements OnInit {
   }
 
   deleteCampaign(campaignId: string) {
+    
     this.deleteCampaignSub = this.campaignservice
       .deleteCampaign(campaignId)
       .subscribe((result) => {

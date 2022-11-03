@@ -241,7 +241,8 @@
           type="text"
           class="input"
           id="location"
-          placeholder="Location (optional)"
+          required
+          placeholder="Please enter city or country"
           [(ngModel)]="model.location"
           name="location"
           #location="ngModel"
@@ -250,6 +251,12 @@
           <i class="fa fa-lock"></i>
         </span>
       </p>
+    </div>
+    <div
+      [hidden]="location.valid || location.pristine"
+      class="notification is-danger is-light"
+    >
+      Location is required!
     </div>
 
     <div class="field">

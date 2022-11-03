@@ -286,6 +286,7 @@
       <div class="separator"></div>
       <div class="course-info">
         <p class="title">{{ campaign.title }}</p>
+        <p class="description">{{ campaign.description }}</p>
         <!-- <p class="sub-title">Id is {{ campaign._id }}</p> -->
         <div class="progress-container">
           <progress class="progress is-small is-primary" value="15" max="100">
@@ -294,9 +295,6 @@
           <p>Mitwirkende</p>
         </div>
         <div>
-          <button class="modify_button" (click)="deleteCampaign(campaign._id)">
-            Delete
-          </button>
           <button
             class="modify_button"
             [ngClass]="{ active: view_update === 'ac_' + i }"
@@ -310,6 +308,9 @@
           </button>
           <button class="modify_button" (click)="joinCampaign(campaign)">
             Join
+          </button>
+          <button class="danger_button" (click)="deleteCampaign(campaign._id)">
+            Delete
           </button>
         </div>
         <div
