@@ -29,6 +29,9 @@ import { getAllJSDocTags } from "typescript";
 
 import worldLocalJSONFile from "/src/assets/data/world.json";
 import { MapboxDrawStyles } from "./MapboxDrawStyle"; //adding drawing styles
+import { CampaignService } from "src/app/models/campaign/campaign.service";
+import { CampaignQuery } from "src/app/models/campaign/campaign.query";
+import { ClusterService } from "./cluster.service";
 
 @Injectable({
   providedIn: "root",
@@ -67,6 +70,7 @@ export class MapService {
   compareModus: Boolean = false;
 
   filters$ = this.uiQuery.selectFilters$;
+  allCampaigns$ = this.campaignQuery.selectAll();
 
   dateRangeData$ = this.boxQuery.selectDateRangeData$;
 
@@ -92,7 +96,10 @@ export class MapService {
     private boxService: BoxService,
     private boxQuery: BoxQuery,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private campaignService: CampaignService,
+    private campaignQuery: CampaignQuery,
+    private clusterService: ClusterService
   ) {
     this.worldData = new BehaviorSubject(false);
   }
@@ -106,6 +113,14 @@ export class MapService {
       [this.bbox_campaign[0], this.bbox_campaign[1]],
       [this.bbox_campaign[2], this.bbox_campaign[3]],
     ]);
+  }
+
+  createCampaignClusters() {
+    let clusterData;
+    this.allCampaigns$.subscribe((result) => (clusterData = result));
+    console.log(clusterData);
+    const cluster = this.clusterService.createClusterGeoJSON(clusterData);
+    return cluster;
   }
 
   // initialize the map, TODO: Dynamic start point
@@ -159,6 +174,71 @@ export class MapService {
           return val.toFixed ? Number(val.toFixed(3)) : val;
         }
       );
+    });
+
+    this.map.on("load", () => {
+      let clusters = this.createCampaignClusters();
+      this.map.addSource("CampaignClusters", {
+        type: "geojson",
+        data: clusters,
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 50,
+      });
+      this.map.addLayer({
+        id: "clusters",
+        type: "circle",
+        source: "CampaignClusters",
+        filter: ["has", "point_count"],
+        paint: {
+          // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+          // with three steps to implement three types of circles:
+          //   * Blue, 20px circles when point count is less than 100
+          //   * Yellow, 30px circles when point count is between 100 and 750
+          //   * Pink, 40px circles when point count is greater than or equal to 750
+          "circle-color": [
+            "step",
+            ["get", "point_count"],
+            "#51bbd6",
+            100,
+            "#f1f075",
+            750,
+            "#f28cb1",
+          ],
+          "circle-radius": [
+            "step",
+            ["get", "point_count"],
+            20,
+            100,
+            30,
+            750,
+            40,
+          ],
+        },
+      });
+      this.map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "CampaignClusters",
+        filter: ["has", "point_count"],
+        layout: {
+          "text-field": "{point_count_abbreviated}",
+          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+          "text-size": 12,
+        },
+      });
+      this.map.addLayer({
+        id: "unclustered-point",
+        type: "circle",
+        source: "CampaignClusters",
+        filter: ["!", ["has", "point_count"]],
+        paint: {
+          "circle-color": "#11b4da",
+          "circle-radius": 4,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "#fff",
+        },
+      });
     });
 
     if (this.Campaign_coord) {

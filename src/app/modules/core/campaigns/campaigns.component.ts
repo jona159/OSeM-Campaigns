@@ -162,10 +162,6 @@ export class CampaignsComponent implements OnInit {
     );
   }
 
-  // logFilterObject() {
-  //   this.searchedCampaigns$ = this.filter();
-  // }
-
   filter() {
     const true_priorities = Object.keys(this.filterObject.priority).filter(
       (k) => this.filterObject.priority[k] === true
@@ -322,7 +318,6 @@ export class CampaignsComponent implements OnInit {
   }
 
   deleteCampaign(campaignId: string) {
-    
     this.deleteCampaignSub = this.campaignservice
       .deleteCampaign(campaignId)
       .subscribe((result) => {
