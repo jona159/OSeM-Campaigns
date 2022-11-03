@@ -247,6 +247,16 @@
         [(ngModel)]="searchstring"
         (ngModelChange)="search(searchstring)"
       />
+      <div class="field">
+        <input
+          id="showCampaignClusters"
+          type="checkbox"
+          name="showCampaignClusters"
+          class="switch is-rounded is-info is-small is-rtl"
+          (click)="switchCampaignClusters()"
+        />
+        <label for="showCampaignClusters">Campaign Clusters</label>
+      </div>
     </div>
     <!-- <button
       class="modify-button"

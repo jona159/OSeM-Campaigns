@@ -162,6 +162,17 @@ export class CampaignsComponent implements OnInit {
     );
   }
 
+  switchCampaignClusters() {
+    const switched = document.getElementById(
+      "showCampaignClusters"
+    ) as HTMLInputElement | null;
+    if (switched.checked) {
+      this.mapService.addCampaignClusters();
+    } else {
+      this.mapService.removeCampaignClusters();
+    }
+  }
+
   filter() {
     const true_priorities = Object.keys(this.filterObject.priority).filter(
       (k) => this.filterObject.priority[k] === true
