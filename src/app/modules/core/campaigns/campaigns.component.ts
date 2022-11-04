@@ -94,6 +94,7 @@ export class CampaignsComponent implements OnInit {
     if (update == this.view_update) {
       this.view_update = "";
     } else {
+      this.mapService.removeSelectedCampaignPolygon();
       this.view_update = update;
       this.view_ac = update;
     }
@@ -122,6 +123,7 @@ export class CampaignsComponent implements OnInit {
   //zoom to currently selected campaign
   clickToZoom(coordinates: any) {
     this.mapService.zoomMe(coordinates);
+    this.mapService.drawSelectedCampaignPolygon();
   }
 
   calcDiffDays(event: Date) {

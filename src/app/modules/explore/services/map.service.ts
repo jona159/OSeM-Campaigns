@@ -113,26 +113,60 @@ export class MapService {
       [this.bbox_campaign[0], this.bbox_campaign[1]],
       [this.bbox_campaign[2], this.bbox_campaign[3]],
     ]);
-    this.map.addSource("selectedCampaignPolygon", {
-      type: "geojson",
-      data: {
-        type: "Feature",
-        geometry: {
-          type: "Polygon",
-          coordinates: JSON.parse(coordinates),
+    // this.map.addSource("selectedCampaignPolygon", {
+    //   type: "geojson",
+    //   data: {
+    //     type: "Feature",
+    //     geometry: {
+    //       type: "Polygon",
+    //       coordinates: JSON.parse(coordinates),
+    //     },
+    //   },
+    // });
+    // this.map.addLayer({
+    //   id: "selectedPoly",
+    //   type: "fill",
+    //   source: "selectedCampaignPolygon",
+    //   layout: {},
+    //   paint: {
+    //     "fill-color": "#0080ff", // blue color fill
+    //     "fill-opacity": 0.5,
+    //   },
+    // });
+  }
+
+  drawSelectedCampaignPolygon() {
+    if (this.Campaign_coord) {
+      this.map.addSource("selectedCampaignPolygon", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: JSON.parse(this.Campaign_coord),
+          },
         },
-      },
-    });
-    this.map.addLayer({
-      id: "selectedPoly",
-      type: "fill",
-      source: "selectedCampaignPolygon",
-      layout: {},
-      paint: {
-        "fill-color": "#0080ff", // blue color fill
-        "fill-opacity": 0.5,
-      },
-    });
+      });
+      this.map.addLayer({
+        id: "selectedPoly",
+        type: "fill",
+        source: "selectedCampaignPolygon",
+        layout: {},
+        paint: {
+          "fill-color": "#0080ff", // blue color fill
+          "fill-opacity": 0.5,
+        },
+      });
+    }
+  }
+
+  removeSelectedCampaignPolygon() {
+    if (this.map.getLayer("selectedPoly")) {
+      this.map.removeLayer("selectedPoly");
+    }
+    if (this.map.getSource("selectedCampaignPolygon")) {
+      this.map.removeSource("selectedCampaignPolygon");
+    }
   }
 
   createCampaignClusters() {
