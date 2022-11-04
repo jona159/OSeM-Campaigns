@@ -113,6 +113,26 @@ export class MapService {
       [this.bbox_campaign[0], this.bbox_campaign[1]],
       [this.bbox_campaign[2], this.bbox_campaign[3]],
     ]);
+    this.map.addSource("selectedCampaignPolygon", {
+      type: "geojson",
+      data: {
+        type: "Feature",
+        geometry: {
+          type: "Polygon",
+          coordinates: JSON.parse(coordinates),
+        },
+      },
+    });
+    this.map.addLayer({
+      id: "selectedPoly",
+      type: "fill",
+      source: "selectedCampaignPolygon",
+      layout: {},
+      paint: {
+        "fill-color": "#0080ff", // blue color fill
+        "fill-opacity": 0.5,
+      },
+    });
   }
 
   createCampaignClusters() {
