@@ -64,6 +64,7 @@ export class CampaignService {
     description: string,
     priority: string,
     location: string,
+    participantCount: number,
     startDate: Date,
     endDate: Date,
     phenomena: string
@@ -75,6 +76,7 @@ export class CampaignService {
         description,
         priority,
         location,
+        participantCount,
         startDate,
         endDate,
         phenomena,

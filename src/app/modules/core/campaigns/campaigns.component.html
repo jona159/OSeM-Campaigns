@@ -151,7 +151,7 @@
                     aria-haspopup="true"
                     aria-controls="dropdown-menu"
                   >
-                    <span>räumliche Nähe</span>
+                    <span>Entfernung</span>
                     <span class="icon is-small" style="top: 10%">
                       <i
                         class="fas fa-sharp fa-solid- fa-angle-right"
@@ -299,10 +299,17 @@
         <p class="description">{{ campaign.description }}</p>
         <!-- <p class="sub-title">Id is {{ campaign._id }}</p> -->
         <div class="progress-container">
-          <progress class="progress is-small is-primary" value="15" max="100">
-            15%
-          </progress>
-          <p>Mitwirkende</p>
+          <progress
+            class="progress is-small is-primary"
+            value="{{ campaign.participantCount }}"
+            max="100"
+          ></progress>
+          <p *ngIf="campaign.participantCount === 1; else mitwirkende">
+            1 Mitwirkender insgesamt
+          </p>
+          <ng-template #mitwirkende>
+            {{ campaign.participantCount }} Mitwirkende insgesamt
+          </ng-template>
         </div>
         <div>
           <button

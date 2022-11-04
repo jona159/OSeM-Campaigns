@@ -5,6 +5,7 @@ export class FormDesign {
     public description?: string,
     public priority?: string,
     public location?: string,
+    public participantCount?: number,
     public startDate?: Date,
     public endDate?: Date,
     public polygonDraw?: string,

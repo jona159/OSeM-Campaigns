@@ -30,6 +30,8 @@ export class CampaignsComponent implements OnInit {
 
   searchstring: string;
 
+  mitwirkende;
+
   // prio: string;
 
   // timeleft: string;
@@ -164,6 +166,26 @@ export class CampaignsComponent implements OnInit {
     );
   }
 
+  filterByLocation() {
+    const onSuccess = (position) => {
+      this.searchedCampaigns$ = this.allCampaigns$.pipe(
+        map(
+          (campaigns: Campaign[]) => campaigns.map((campaign) => campaign)
+          // .sort((position, b) => {
+
+          // }
+        )
+      );
+    };
+    const onError = (err) => {
+      console.log(err);
+    };
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    // this.searchedCampaigns$ = this.allCampaigns$.pipe(
+    //   map((campaigns: Campaign[]) => campaigns.map((campaign) => campaign))
+    // );
+  }
+
   switchCampaignClusters() {
     const switched = document.getElementById(
       "showCampaignClusters"
@@ -294,22 +316,31 @@ export class CampaignsComponent implements OnInit {
     this.isUpdateActivated = true;
   }
 
+  // joinCampaign(campaign: Campaign) {
+  //   this.campaignToBeUpdated = { ...campaign };
+  //   this.sessionQuery.user$.subscribe(
+  //     (result) => (this.currentUser = result.name)
+  //   );
+
+  //   //alert('Follow this link to join the discussion on Slack: https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
+
+  //   this.campaignToBeUpdated.participants = this.currentUser;
+  //   this.updateCampaignSub = this.campaignservice
+  //     .updateCampaign(this.campaignToBeUpdated._id, this.campaignToBeUpdated)
+  //     .subscribe((result) => console.log(result));
+  //   //this.campaignToBeUpdated = null;
+  //   window.open(
+  //     "https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ"
+  //   );
+  // }
+
   joinCampaign(campaign: Campaign) {
     this.campaignToBeUpdated = { ...campaign };
-    this.sessionQuery.user$.subscribe(
-      (result) => (this.currentUser = result.name)
-    );
+    this.campaignToBeUpdated.participantCount += 1;
 
-    //alert('Follow this link to join the discussion on Slack: https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ');
-
-    this.campaignToBeUpdated.participants = this.currentUser;
     this.updateCampaignSub = this.campaignservice
       .updateCampaign(this.campaignToBeUpdated._id, this.campaignToBeUpdated)
       .subscribe((result) => console.log(result));
-    //this.campaignToBeUpdated = null;
-    window.open(
-      "https://join.slack.com/t/opensensemapcampaigns/shared_invite/zt-11uz1lkc3-w98lYPWGllA1iZdMVZFNzQ"
-    );
   }
 
   updateCampaign(updateForm) {

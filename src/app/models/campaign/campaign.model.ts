@@ -10,6 +10,7 @@ export interface Campaign {
   description: string;
   priority: string;
   location: string;
+  participantCount?: number;
   startDate: Date;
   endDate: Date;
   polygonDraw: string;
