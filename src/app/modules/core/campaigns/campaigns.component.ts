@@ -161,7 +161,11 @@ export class CampaignsComponent implements OnInit {
       map((campaigns: Campaign[]) =>
         campaigns
           .map((campaign) => campaign)
-          .filter((c) => c.title.includes(event) || c.location.includes(event))
+          .filter(
+            (c) =>
+              c.title.toLowerCase().includes(event.toLowerCase()) || // Case Insensitive
+              c.location.toLowerCase().includes(event.toLowerCase())
+          )
       )
     );
   }
