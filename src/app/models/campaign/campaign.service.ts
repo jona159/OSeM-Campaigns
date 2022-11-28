@@ -84,7 +84,7 @@ export class CampaignService {
       .pipe(
         tap((value) => {
           console.log(value);
-          this.campaignStore.add([value]);
+          // this.campaignStore.add([value]);
           //alert('Campaign was created successfully!');
         })
       );
