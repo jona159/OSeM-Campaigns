@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
-  color: #222;
+  // color: #222;
 }
 
 body {
@@ -59,15 +59,16 @@ progress {
   right: 0px;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: rgb(232, 227, 227);
   border: 2px solid black;
   border-radius: 7.5%;
   width: auto;
   height: auto;
-  margin: 1px;
-  padding: 1px;
+  padding: 2px;
+  margin: 2px;
   text-transform: uppercase;
-  font-size: 0.75rem; /* 12px */
+  font-size: 0.65rem; /* 12px */
+  // font-family: Arial, Helvetica, sans-serif;
   line-height: 1rem; /* 16px */
 }
 
@@ -78,7 +79,7 @@ progress {
 
 .priority-container.high {
   border: 2px solid yellow;
-  color: yellow;
+  color: rgb(156, 156, 32);
 }
 
 .priority-container.medium {
@@ -92,7 +93,7 @@ progress {
 }
 
 .priority-container p {
-  padding: 2px;
+  padding: 4px;
 }
 
 .progress-container {
@@ -240,8 +241,9 @@ progress {
   justify-content: center;
   align-items: center;
   // background: white;
-  margin-left: 1em;
+  // margin-left: 1em;
   padding: 0.5rem;
+  z-index: 2;
 }
 
 .fa-arrow-circle-up {
@@ -267,15 +269,11 @@ progress {
 .content-container {
   position: relative;
   background-color: white;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-row-gap: 5px;
-  grid-column-gap: 5px;
   padding: 10px;
-  margin-top: 0px;
+  margin-top: 2rem;
   margin-bottom: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  // margin-right: 20px;
   box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2);
   font-size: 0.6em;
   font-weight: bold;
@@ -342,6 +340,10 @@ progress {
       color: white;
     }
   }
+}
+
+.osem-create-campaign button a {
+  color: #222;
 }
 
 .nested.dropdown {

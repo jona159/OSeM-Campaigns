@@ -293,6 +293,17 @@
         <i class="fa fa-thin fa-clock"></i>
         <p>{{ campaign.priority }}</p>
       </div>
+      <div
+        class="icon"
+        [ngClass]="{ active: view_ac === 'ac_' + i }"
+        (click)="
+          changeAccordion('ac_' + i);
+          handleUpdateForm(campaign);
+          clickToZoom(campaign.polygonDraw)
+        "
+      >
+        <i class="fas fa-arrow-circle-up"></i>
+      </div>
       <div class="separator"></div>
       <div class="course-info">
         <p class="title">{{ campaign.title }}</p>
@@ -316,7 +327,7 @@
             class="modify_button"
             [ngClass]="{ active: view_update === 'ac_' + i }"
             (click)="
-              showUpdateForm(campaign);
+              handleUpdateForm(campaign);
               changeUpdate('ac_' + i);
               clickToZoom(campaign.polygonDraw)
             "
@@ -329,17 +340,6 @@
           <button class="danger_button" (click)="deleteCampaign(campaign._id)">
             Delete
           </button>
-        </div>
-        <div
-          class="icon"
-          [ngClass]="{ active: view_ac === 'ac_' + i }"
-          (click)="
-            changeAccordion('ac_' + i);
-            showUpdateForm(campaign);
-            clickToZoom(campaign.polygonDraw)
-          "
-        >
-          <i class="fas fa-arrow-circle-up"></i>
         </div>
       </div>
     </div>
